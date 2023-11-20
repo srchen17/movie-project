@@ -8,7 +8,7 @@ import axios from "axios";
 // testing page for project 
 function TestProject() {
     // api key 
-    const REACT_APP_API_KEY = 'f085601780dbbd04b0f1dcb3c4438d12';
+    const REACT_APP_API_KEY = 'PASTE KEY HERE';
 
     // results form the search 
     const [results, setResults] = useState("");
