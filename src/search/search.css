@@ -1,0 +1,29 @@
+
+/* from home.css */
+.movie-card {
+    min-width: 185px;
+    min-height: 320px;
+    max-width: 185px;
+    max-height: 350px;
+    border: none;
+    margin-bottom:20px;
+}
+
+.movie-card-image {
+    border-radius: 5px;
+}
+
+
+/* for search.css */
+.movie-results-group .movie-card {
+    padding: 10px;
+}
+
+.movie-card p {
+    text-align: center;
+}
+
+.movie-title {
+    line-height: 15px;
+    font-size: 14px;
+}
