@@ -1,0 +1,25 @@
+
+.movie-details {
+    padding: 100px;
+}
+
+.movie-poster-image {
+    min-width: 260px;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.movie-details .general-details {
+    margin: auto;
+    height: 500px;
+}
+
+.movie-poster-col {
+    max-width: 300px;
+}
+
+.btn {
+    margin-top: 10px;
+    border-radius: 5px;
+    max-width: 100%;
+}

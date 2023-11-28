@@ -1,0 +1,23 @@
+
+/* from home.css */
+.movie-card {
+    min-width: 175px;
+    min-height: 300px;
+    max-width: 175px;
+    max-height: 300px;
+    border: none;
+}
+
+.movie-card-image {
+    border-radius: 5px;
+}
+
+
+/* for search.css */
+.movie-results-group .movie-card {
+    padding: 10px;
+}
+
+.movie-card h6 {
+    text-align: center;
+}
