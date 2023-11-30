@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 function Details() {
     const { id } = useParams();
-    const REACT_APP_API_KEY = 'f085601780dbbd04b0f1dcb3c4438d12';
+    const REACT_APP_API_KEY = '';
     const [movie, setMovie] = useState("");
 
     const fetchMovie = async () => {
