@@ -1,0 +1,82 @@
+
+
+/*Account*/
+.account-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.account-info{
+
+    width:500px;
+    height:400px;
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+}
+
+.account-stats{
+    margin-top: 60px;
+    width:400px;
+}
+
+.account-modal{
+
+
+    width:500px;
+    height:600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.account-inputs{
+    width:300px;
+    height:50px;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 25px;
+
+}
+
+
+/*Sign up and sign in */
+.signin-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.signin-title{
+   text-align: start !important;
+    margin-bottom: 25px;
+}
+
+.signin-inputs{
+    width:300px;
+    height:50px;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 25px;
+
+}
+
+.error-message{
+    color:red;
+}
+.signin-modal{
+    vertical-align: middle;
+    width:500px;
+    height:400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
