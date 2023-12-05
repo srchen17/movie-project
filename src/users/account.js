@@ -1,6 +1,8 @@
 import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+export let accountData = null;
 function Account() {
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ function Account() {
   const fetchAccount = async () => {
     const account = await client.account();
     setAccount(account);
+    accountData = account;
   };
   useEffect(() => {
     fetchAccount();
@@ -19,16 +22,30 @@ function Account() {
 
 
 
+
+
   return (
     <div>
+      {!account &&(
+
+        <div className="account-container">
+
+          <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer"/>
+          <h1> You are not logged in</h1>
+
+
+        </div>
+      )}
+
+
 
 
       {account && (
 
 
           <div className="account-container">
-            <div className="col-5">
-              <div class="account-info">
+            <div className="col-12 col-md-6 left-side">
+              <div class="account-info2">
                 <h1>
                   Welcome, {account.username}
                 </h1>
@@ -67,13 +84,13 @@ function Account() {
 
               </div>
 
-
-
             </div>
-            <div className="col-4">
+            <div className="col-12 col-md-6 right-side d-none d-lg-block">
               <div className="account-modal shadow p-5 mb-5  rounded">
 
-                <select className="account-inputs form-select" onChange={(e) => setAccount({
+                <select className="account-inputs form-select"
+                        value={account && account.role ? account.role : "USER"}
+                        onChange={(e) => setAccount({
                   ...account,
                   role: e.target.value
                 })}>

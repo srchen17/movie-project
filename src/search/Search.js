@@ -15,19 +15,31 @@ function Search() {
     return (
         <div>
             <div class="movie-display-group">
-                <div class="p-3">
-                    <h3>Search</h3>
+                <div class=" row p-3">
+                    {/*<h3>Search</h3>*/}
                     {/* Search Bar  */}
+
+                    <div className=" d-flex search">
+
                     <input
                         onChange={(e) => setQuery(e.target.value)}
-                        className="form-control" type="text"
+                        className="form-control rounded-pill search-bar shadow-sm p-3 mb-5 bg-white" type="text"
                         placeholder="Search" aria-label="Search"
                         value={query} />
                     {/* Search button: on click, links to results page, passes query
                         as path parameter */}
-                    <Link to={`/search/${query}`} >
-                        <button class="float-end btn btn-light">Search</button>
-                    </Link>
+
+                        <Link to={`/search/${query}`} >
+                            <button class="float-end btn  btn-lg">
+                                <i className="fa-solid fa-xl fa-magnifying-glass shadow-lg search-button "></i>
+                            </button>
+                        </Link>
+                    </div>
+
+
+
+
+
                 </div>
                 <div>
                 </div>

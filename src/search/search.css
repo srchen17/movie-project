@@ -21,9 +21,20 @@
 
 .movie-card p {
     text-align: center;
+
 }
 
 .movie-title {
     line-height: 15px;
     font-size: 14px;
 }
+
+.search-bar{
+    margin-left:200px;
+
+}
+
+.search{
+    width:1300px;
+}
+
