@@ -1,0 +1,228 @@
+
+
+/*Account*/
+.account-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.bad-computer{
+    width:150px;
+    margin-right:50px;
+}
+.account-info{
+
+    width:500px;
+    height:400px;
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    /*justify-content: center;*/
+}
+
+.account-info2{
+
+    width:500px;
+    height:400px;
+    display: flex;
+    margin-left: 150px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*justify-content: center;*/
+}
+
+.account-stats{
+    margin-top: 60px;
+    width:400px;
+}
+
+.account-modal{
+
+
+    width:500px;
+    height:600px;
+    display: flex;
+    margin-left: 100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-side{
+    padding: 20px;
+}
+@media (max-width: 900px) {
+    .right-side {
+        display: none;
+    }
+}
+
+.account-inputs{
+    width:300px;
+    height:50px;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 25px;
+
+}
+
+
+/*Sign up and sign in */
+.signin-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.signin-title{
+   text-align: start !important;
+    margin-bottom: 25px;
+}
+
+.signin-inputs{
+    width:300px;
+    height:50px;
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 25px;
+
+}
+
+.error-message{
+    color:red;
+}
+.signin-modal{
+    vertical-align: middle;
+    width:500px;
+    height:400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*userlist*/
+
+.user-table{
+    padding-left: 30px;
+    padding-right: 0px;
+    width:84%
+
+}
+
+.contact-info{
+    width:340px;
+
+}
+
+.dashboard-container{
+
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    width:90%;
+    margin-left:80px;
+}
+.header{
+    width:140px;
+}
+
+.chakra-modal-editUserModal {
+    height:600px;
+    max-width:1000px;
+}
+.chakra-modal{
+    height:600px;
+    max-width:1000px;
+}
+
+.edit-container{
+    width:1000px !important;
+    margin-left:25px !important;
+    margin-right:25px !important;
+}
+
+
+.table-row{
+    width:100% !important;
+}
+.account-options{
+    width:100px !important;
+
+}
+
+
+
+
+
+/*IGNORE for button aesthetics*/
+
+
+/*delete button*/
+
+
+.delete-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /*background-color: rgb(20, 20, 20);*/
+    background-color: rgba(202, 31, 31, 0.62);
+    border: solid;
+    border-color:red;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);*/
+    cursor: pointer;
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+}
+
+.svgIcon {
+    width: 12px;
+    transition-duration: .3s;
+}
+
+.svgIcon path {
+    fill: white;
+}
+
+.delete-button:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: .5s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+}
+
+.delete-button:hover .svgIcon {
+    width: 50px;
+    transition-duration: .3s;
+    transform: translateY(60%);
+}
+
+.delete-button::before {
+    position: absolute;
+    top: -20px;
+    content: "Delete";
+    color: white;
+    transition-duration: .3s;
+    font-size: 2px;
+}
+
+.delete-button:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
+}

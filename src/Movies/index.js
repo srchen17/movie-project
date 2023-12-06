@@ -14,6 +14,7 @@ function Movie() {
                <Routes>
                    <Route path="/" element={<Navigate to="Home" />} />
                    <Route path="Account" element={<h1>Account</h1>} />
+
                </Routes>
 
             </div>
