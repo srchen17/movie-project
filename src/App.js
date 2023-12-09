@@ -22,10 +22,12 @@ import { Provider } from "react-redux";
 import UserReviews from './users/user-reviews';
 import ReviewEditor from './reviews/edit-review';
 import Home from './home/home';
+
 import { useSelector, useDispatch } from "react-redux";
 import {
     setAccount, setLoggedIn,
     } from "../src/users/accountReducer"
+
 
 
 function SignoutButton(){
@@ -201,7 +203,7 @@ function App() {
 
             <div>
               <Routes>
-                <Route path="/" element={<Navigate to="/signin" />} />
+                <Route path="/" element={<Navigate to="/home" />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userslist" element={<Userslist />} />
@@ -212,7 +214,7 @@ function App() {
                 <Route path="review/:movieId" element={<Review />} />
                 <Route path="account/reviews" element={<UserReviews />} />
                 <Route path="account/reviews/edit/:reviewId" element={<ReviewEditor />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/home" element={<Home/>} />
 
 
               </Routes>

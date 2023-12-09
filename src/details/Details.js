@@ -7,6 +7,7 @@ import * as reviewsClient from "../reviews/client";
 import { findUserById } from "../users/client";
 import { useSelector } from "react-redux";
 
+
 function Details() {
     const { id } = useParams();
     const REACT_APP_API_KEY = 'f085601780dbbd04b0f1dcb3c4438d12';
@@ -33,43 +34,49 @@ function Details() {
 
 
 
-        <div>
-            {!logged_in && (
-
-                <div className="account-container">
-
-                    <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer" />
-                    <h1> You are not logged in</h1>
-
-
-                </div>
-            )}
-
-            {logged_in && (
-
-                <div class="movie-details row">
+        <div class="details">
+           
+         
+                <div>
+             <div class="banner-img">
+                     <img class="card-img-top" 
+                          src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+                           alt="Card image cap"/>
+            </div> 
+                <div class="movie-details row d-flex justify-content-center">
                     <div class="col movie-poster-col">
                         <img class="movie-poster-image"
                             src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                             alt="Card image cap" />
                         <div class="d-flex flex-column">
-                            <button class="btn btn-primary">Like</button>
-                            <Link to={`/review/${id}`} >
-                                <button class="btn btn-primary">Review</button>
+                        {!logged_in && (
+                            <Link to={`/signin`} >
+                            <button class="btn btn-dark w-100">Sign in to review</button>
+                         </Link>
+                            )}
+                        {logged_in && (
+                               <Link to={`/review/${id}`} >
+                               <button class="btn btn-dark w-100">Review</button>
                             </Link>
+                        )}
 
+                            
+                         
                         </div>
                     </div>
                     <div class="col position-relative overflow-auto general-details">
                         <h1 class="">{movie.title}</h1>
-                        <h3>{movie.release_date}</h3>
-                        <p>{movie.original_language}</p>
-                        <p>{movie.popularity}</p>
+                        <hr/>
+                        <h4>Release Date: {movie.release_date}</h4>
+                        <p class="details-text">Original Language: {movie.original_language}</p>
+                        <p class="details-text">Popularity Score: {movie.popularity}</p>
+                        <span class="p-3"></span>
 
                         <h3>Overview</h3>
                         <p>{movie.overview}
                         </p>
-                        <hr />
+                        <span class="p-3"></span>
+                       
                         <h3>Reviews</h3>
                         {reviews.map((review) => (
                             <Link to={`/details/${movie.id}`}>
@@ -83,13 +90,9 @@ function Details() {
                         ))}
                     </div>
                 </div>
-            )}
-
+                </div>
+            
         </div>
-
-
-
-
     )
 }
 

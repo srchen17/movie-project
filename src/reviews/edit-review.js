@@ -10,7 +10,8 @@ import { useParams } from "react-router-dom";
 
 function ReviewEditor() {
     const { reviewId } = useParams(); 
-    const [review, setReview] = useState("");
+    const [review, setReview] = useState("")
+    const [movie, setMovie] = useState("");
 
     const fetchReview = async () => {
         const response = await client.findReviewById(reviewId);
