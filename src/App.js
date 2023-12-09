@@ -28,16 +28,6 @@ import {
     setAccount, setLoggedIn,
     } from "../src/users/accountReducer"
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-
-=======
-let userAccount = null;
->>>>>>> Stashed changes
-=======
-let userAccount = null;
->>>>>>> Stashed changes
 function SignoutButton(){
     const dispatch = useDispatch();
 
