@@ -3,14 +3,30 @@ import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import "../bootstrap/css/styles.css";
 import './user.css';
+import { useSelector, useDispatch } from "react-redux";
+import {
+    setAccount, setLoggedIn,
+    } from "./accountReducer"
+
+
 function Signin() {
     const [credentials, setCredentials] = useState({ username: "", password: "" });
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+
+    const account = useSelector((state) => state.accountReducer.account);
+    const dispatch = useDispatch();
+
+
     const signin = async () => {
         try{
             console.log("IN THE TRY");
-            await client.signin(credentials);
+
+            client.signin(credentials)
+            .then( (value) => 
+                dispatch(setAccount(value))
+            ).then(dispatch(setLoggedIn(true)));
+            
             navigate("/account");
         }catch (error){
             if (error.response) {

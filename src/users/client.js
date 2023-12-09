@@ -1,12 +1,17 @@
 import axios from "axios";
 
+
+
+
 const request = axios.create({
     withCredentials: true,
 });
 
+
 export const BASE_API = "http://localhost:4000"
 //process.env.REACT_APP_BASE_API_URL;
 export const USERS_API = `${BASE_API}/api/users`;
+
 export const signin = async (credentials) => {
     const response = await axios.post( `${USERS_API}/signin`, credentials );
     return response.data;
@@ -15,6 +20,7 @@ export const signin = async (credentials) => {
 export const account = async () => {
     const response = await axios.post(`${USERS_API}/account`);
     return response.data;
+    
 };
 
 export const updateUser = async (user) => {
@@ -22,6 +28,10 @@ export const updateUser = async (user) => {
     return response.data;
 };
 
+export const findLatestUsers = async () => {
+    const response = await axios.get(`${USERS_API}/latest/find`);
+    return response.data;
+};
 
 export const findAllUsers = async () => {
     const response = await axios.get(`${USERS_API}`);

@@ -1,28 +1,35 @@
 import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import * as reviewsClient from "../reviews/client";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  setAccount, setLoggedIn,
+  } from "./accountReducer";
 
 export let accountData = null;
 function Account() {
   const [account, setAccount] = useState(null);
+
   const navigate = useNavigate();
   const save = async () => {
     await client.updateUser(account);
   };
 
+  const dispatch = useDispatch();
+
   const fetchAccount = async () => {
     const account = await client.account();
     setAccount(account);
     accountData = account;
+    
   };
+
+
   useEffect(() => {
-    fetchAccount();
+     fetchAccount();
   }, []);
-
-
-
-
-
 
   return (
     <div>
@@ -73,6 +80,13 @@ function Account() {
                   <li className="list-group-item d-flex justify-content-between align-items-start">
                     <div className="ms-2 me-auto">
                       <div className="fw-bold">Following</div>
+
+                    </div>
+                    <span className="badge bg-primary rounded-pill">15</span>
+                  </li>
+                  <li className="list-group-item d-flex justify-content-between align-items-start">
+                    <div className="ms-2 me-auto">
+                     <Link to='/account/reviews'>Reviews </Link>
 
                     </div>
                     <span className="badge bg-primary rounded-pill">15</span>

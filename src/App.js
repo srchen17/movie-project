@@ -16,14 +16,29 @@ import "./bootstrap/css/styles.css";
 import '@fortawesome/fontawesome-free/css/all.css';
 import Userslist from "./users/userslist";
 import { ChakraProvider } from '@chakra-ui/react'
+import Review from "./reviews/review";
+import store from './store';
+import { Provider } from "react-redux";
+import UserReviews from './users/user-reviews';
+import ReviewEditor from './reviews/edit-review';
+import Home from './home/home';
+import { useSelector, useDispatch } from "react-redux";
+import {
+    setAccount, setLoggedIn,
+    } from "../src/users/accountReducer"
 
 
 function SignoutButton(){
+    const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const signout = async () => {
-    await client.signout();
+    await client.signout().then(
+      dispatch(setLoggedIn(false))
+    );
     navigate("/signin");
     closeNav();
+    
   };
   return (
       <button className="btn btn-danger mx-4 btn-lg btn-outline-dark text-dark" onClick={signout} >
@@ -52,6 +67,7 @@ function AdminView(){
 function SigninButton(){
   const navigate = useNavigate();
   const signin = async () => {
+    
     navigate("/signin");
     closeNav();
   };
@@ -75,16 +91,20 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [account, setAccount] = useState(null);
 
+  
+
 
   const fetchAccount = async () => {
+    
     const account = await client.account();
     setAccount(account);
+    
   };
+
   useEffect(() => {
     fetchAccount();
   }, []);
 
-  console.log(accountData)
 
   useEffect(() => {
     // Check if the user's role is ADMIN and update isAdmin state accordingly
@@ -95,9 +115,8 @@ function App() {
     }
   }, [accountData]);
 
-
-
   return (
+    <Provider store={store}>
       <ChakraProvider>
         <HashRouter>
           <div>
@@ -140,6 +159,11 @@ function App() {
               <div className="overlay-content">
                 <ul>
                   <li className="menu-text" >
+                  <li className="menu-text" >
+                    <Link to="/home">
+                      <span className="menu-text" onClick={closeNav}>Home</span>
+                    </Link>
+                  </li>
                     <Link to="/search">
                       <span className="menu-text" onClick={closeNav}>Search</span>
                     </Link>
@@ -185,6 +209,12 @@ function App() {
                 <Route path="/search/*" element={<Search />} />
                 <Route path="search/:query" element={<Results />} />
                 <Route path="details/:id" element={<Details />} />
+                <Route path="review/:movieId" element={<Review />} />
+                <Route path="account/reviews" element={<UserReviews />} />
+                <Route path="account/reviews/edit/:reviewId" element={<ReviewEditor />} />
+                <Route path="/home" element={<Home />} />
+
+
               </Routes>
             </div>
             <div>
@@ -196,6 +226,7 @@ function App() {
           </div>
         </HashRouter>
       </ChakraProvider>
+      </Provider>
   );
 }
 

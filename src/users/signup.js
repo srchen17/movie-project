@@ -3,15 +3,25 @@ import {Link, useNavigate} from "react-router-dom";
 import * as client from "./client";
 import "../bootstrap/css/styles.css";
 import './user.css';
+import { useSelector, useDispatch } from "react-redux";
+import {
+    setAccount,
+    } from "./accountReducer"
 
 function Signup() {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({
         username: "", password: "" });
     const navigate = useNavigate();
+    const account = useSelector((state) => state.accountReducer.account);
+    const dispatch = useDispatch();
+
     const signup = async () => {
         try {
             await client.signup(credentials);
+            client.account().then(
+                (response) => dispatch(setAccount(response)));
+            console.log(account);
             navigate("/account");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {
