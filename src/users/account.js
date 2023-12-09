@@ -56,7 +56,7 @@ function Account() {
                 <h1>
                   Welcome, {account.username}
                 </h1>
-                <h2>{account.firstName}{account.lastName}</h2>
+                <h2>{account.firstName}  {account.lastName}</h2>
                 <h4>{account.email}</h4>
 
 

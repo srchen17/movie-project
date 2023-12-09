@@ -44,14 +44,6 @@ function UserList() {
 
 
 
-    // const fetchAccount = async () => {
-    //     const account = await client.account();
-    //     setAccount(account);
-    // };
-    // useEffect(() => {
-    //     fetchAccount();
-    // }, []);
-
 
 
     const selectUser = async (user) => {
@@ -102,7 +94,7 @@ function UserList() {
         const users = await client.findAllUsers();
         setUsers(users);
     };
-    // useEffect(() => { fetchUsers(); }, []);
+
 
     const openEditModal = (userId) => {
         setEditUser(users.find(user => user._id === userId));
@@ -215,10 +207,6 @@ function UserList() {
 
 
 
-
-
-
-            {/*TO DO hook up with user information !!!!!!!! */}
             <Modal className="edit-modal" id={`editUserModal-${user._id}`} isOpen={editUserModal[user._id]} onClose={() => closeEditModal(user._id)}>
                 <ModalOverlay />
                 <ModalContent minWidth="fit-content" minheight="fit-content">

@@ -6,8 +6,39 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import * as reviewsClient from "../reviews/client";
 import * as usersClient from "../users/client";
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
+=======
+=======
+>>>>>>> Stashed changes
+import {useNavigate} from "react-router";
+
+function AdminView(){
+    const navigate = useNavigate();
+    const adminView = async () => {
+        navigate("/userslist");
+    };
+<<<<<<< Updated upstream
+=======
+
+    return (
+        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark" onClick={adminView} >
+            Admin View
+        </button>
+    );
+}
+>>>>>>> Stashed changes
+
+    return (
+        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark" onClick={adminView} >
+            Admin View
+        </button>
+    );
+}
+
+>>>>>>> Stashed changes
 
 function Home() {
     // api key 
@@ -84,6 +115,7 @@ function Home() {
 
     return (
 
+<<<<<<< Updated upstream
         <div class="home">
            
             {/* <div class="banner-img">
@@ -134,6 +166,56 @@ function Home() {
                         {reviews.map((review) => (
                         <Link to={`/account/reviews`}>
                             <div className="card review-card m-3 d-flex justify-content-center">
+=======
+
+        <div className="movie-display-group ">
+            {/*{!logged_in && (*/}
+
+            {/*    // <div className="account-container">*/}
+            {/*    <div >*/}
+
+            {/*        <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer" />*/}
+            {/*        <h1> You are not logged in (home)</h1>*/}
+
+
+            {/*    </div>*/}
+            {/*)}*/}
+
+                <div>
+                    <AdminView/>
+                    <h1>Recently Joined Users</h1>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
+                    {latestUsers.map((user) => (
+                        <Link to={`/account/reviews`}>
+                            <div className="card">
+                                <li className="list-group-item">
+                                    <h2> {user.username} </h2>
+                                   
+                                </li>
+
+                            </div>
+                        </Link>
+
+                    ))}
+                </ul>
+
+                </div>
+           
+
+            <div className="p-3">
+                {!logged_in && (
+                    <h1>Recent Reviews</h1>
+            )}
+             {logged_in && (
+                    <h1>Your Reviews</h1>
+            )}
+
+                
+                <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
+                    {reviews.map((review) => (
+                        <Link to={`/account/reviews/${review._id}`}>
+                            <div className="card">
+>>>>>>> Stashed changes
                                 <li className="list-group-item">
                                     <h2> {review.rating} / 100 </h2>
                                     <p> {review.review} </p>
