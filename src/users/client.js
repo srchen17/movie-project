@@ -64,3 +64,30 @@ export const deleteUser = async (user) => {
     return response.data;
 };
 
+export const follow = async (userId,followerId) => {
+
+    console.log("BEOFRE --- ");
+    console.log({userId});
+    console.log({followerId});
+    console.log(" --- ");
+    const response = await axios.post(`${USERS_API}/follow`, { userId, followerId });
+
+    console.log("Response --- ");
+    console.log({response});
+    console.log(" --- ");
+
+    return response.data;
+};
+
+
+export const findAllFollowersByUserId = async (id) => {
+    const response = await axios.get(`${USERS_API}/followers/${id}`);
+    return response.data;
+};
+
+export const findAllFollowingByUserId = async (id) => {
+    const response = await axios.get(`${USERS_API}/following/${id}`);
+    return response.data;
+};
+
+

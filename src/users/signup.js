@@ -5,8 +5,8 @@ import "../bootstrap/css/styles.css";
 import './user.css';
 import { useSelector, useDispatch } from "react-redux";
 import {
-    setAccount,
-    } from "./accountReducer"
+    setAccount, setLoggedIn,
+} from "./accountReducer"
 
 function Signup() {
     const [error, setError] = useState("");
@@ -22,6 +22,7 @@ function Signup() {
             client.account().then(
                 (response) => dispatch(setAccount(response)));
             console.log(account);
+            dispatch(setLoggedIn(true))
             navigate("/account");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {

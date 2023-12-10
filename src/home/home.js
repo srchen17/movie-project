@@ -6,8 +6,25 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import * as reviewsClient from "../reviews/client";
 import * as usersClient from "../users/client";
+
 import { CgProfile } from "react-icons/cg";
 import { FaHome } from "react-icons/fa";
+
+import {useNavigate} from "react-router";
+
+function AdminView(){
+    const navigate = useNavigate();
+    const adminView = async () => {
+        navigate("/userslist");
+    };
+
+    return (
+        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark " onClick={adminView} >
+            Admin View
+        </button>
+    );
+}
+
 
 function Home() {
     // api key 
@@ -98,6 +115,7 @@ function Home() {
 
     return (
 
+
         <div class="home">
             <div class="crop">
             <Link to={`/details/${bannerMovie.id}`}>
@@ -109,15 +127,18 @@ function Home() {
             <div className="p-4">
                 <div>
                     <h1 className="p-3">Home</h1>
-                    {/* <FaHome size={35}/> */}
+                    <div className="">
+                        {account && account.role =="ADMIN" && (
+                            <AdminView/>
+                        )}
+                    </div>
                 </div>
-
                 <div className="review-scroll-group">
                     <h3 className="genre-name">Recently Joined Users</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                         {latestUsers.map((user) => (
-                            <Link to={`/account/reviews`}>
+                            <Link to={`/account/${user._id}`}>
                                 <div className="card profile-card m-3 d-flex justify-content-center">
                                     <div className="">
                                         <div className="d-flex justify-content-center">
@@ -134,34 +155,69 @@ function Home() {
                 </div>
 
 
+                {/*<div className="review-scroll-group">*/}
+                {/*    {!logged_in && (*/}
+                {/*        <h3 className="genre-name">Recent Reviews</h3>*/}
+                {/*    )}*/}
+                {/*    {logged_in && (*/}
+                {/*        <h3 className="genre-name">Your Recent Reviews</h3>*/}
+                {/*    )}*/}
+                {/*    <ul className="list-group list-group-horizontal position-relative overflow-auto">*/}
+                {/*        {reviews.map((review) => (*/}
+                {/*            <Link to={`/account/reviews`}>*/}
+                {/*                <div className="card review-card m-3 d-flex justify-content-center">*/}
+                {/*                    <li className="list-group-item">*/}
+                {/*                        <h2> {review.rating} / 100 </h2>*/}
+                {/*                        <p> {review.review} </p>*/}
+                {/*                    </li>*/}
+                {/*                </div>*/}
+                {/*            </Link>*/}
+                {/*        ))}*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
+
 
 
                 <div className="review-scroll-group">
-                    {!logged_in && (
-                        <h3 className="genre-name">Recent Reviews</h3>
-                    )}
-                    {logged_in && (
-                        <h3 className="genre-name">Your Recent Reviews</h3>
-                    )}
-                    <ul className="list-group list-group-horizontal position-relative overflow-auto">
-                        {reviews.map((review) => (
-                            <Link to={`/account/reviews`}>
-                                <div className="card review-card m-3 d-flex justify-content-center">
-                                    <li className="list-group-item">
-                                        <h2> {review.rating} / 100 </h2>
-                                        <p> {review.review} </p>
-                                    </li>
-                                </div>
-                            </Link>
-                        ))}
-                    </ul>
-                </div>
 
-                <div className="movie-display-group">
-                    <div className="movie-scroll-group">
-                        <h3 className="genre-name">Trending</h3>
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
-                            {trendingMovies.map((movie) => (
+//                     {!logged_in && (
+//                         <h3 className="genre-name">Recent Reviews</h3>
+//                     )}
+//                     {logged_in && (
+//                         <h3 className="genre-name">Your Recent Reviews</h3>
+//                     )}
+//                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
+//                         {reviews.map((review) => (
+//                             <Link to={`/account/reviews`}>
+//                                 <div className="card review-card m-3 d-flex justify-content-center">
+//                                     <li className="list-group-item">
+//                                         <h2> {review.rating} / 100 </h2>
+//                                         <p> {review.review} </p>
+//                                     </li>
+//                                 </div>
+//                             </Link>
+//                         ))}
+//                     </ul>
+//                 </div>
+
+//                 <div className="movie-display-group">
+//                     <div className="movie-scroll-group">
+//                         <h3 className="genre-name">Trending</h3>
+//                         <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
+//                             {trendingMovies.map((movie) => (
+
+                        {!logged_in && (
+                            <h3 className="genre-name">Recent Reviews</h3>
+                        )}
+                        {logged_in && (
+                            <h3 className="genre-name">Your Recent Reviews</h3>
+                        )}
+
+                        <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                        {reviews.map((review) => (
+                        <Link to={`/account/reviews/${review._id}`}>
+                            <div className="card review-card m-3 d-flex justify-content-center">
+
                                 <li className="list-group-item">
                                     <div className="card movie-card">
                                         <Link to={`/details/${movie.id}`}>

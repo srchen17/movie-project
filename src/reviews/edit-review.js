@@ -25,6 +25,7 @@ function ReviewEditor() {
         setReview(response);
         console.log(JSON.stringify(review));
 
+
         setMovie(movieResponse.data);
         console.log(JSON.stringify(movie))
 
@@ -32,9 +33,11 @@ function ReviewEditor() {
             .then((value) => {setMovieId(value.data.id)});
     }
 
-    useEffect(() => {
-        fetchReview();
-    }, []);
+
+      useEffect(() => {
+
+       fetchReview();
+      }, []);
 
 
     const [errorMessage, setErrorMessage] = useState("");

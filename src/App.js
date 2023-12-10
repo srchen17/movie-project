@@ -28,8 +28,6 @@ import {
     setAccount, setLoggedIn,
     } from "../src/users/accountReducer"
 
-
-
 function SignoutButton(){
     const dispatch = useDispatch();
 
@@ -49,20 +47,7 @@ function SignoutButton(){
   );
 }
 
-function AdminView(){
-  const navigate = useNavigate();
-  const adminView = async () => {
-    navigate("/userslist");
-    closeNav();
-  };
 
-
-  return (
-      <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark" onClick={adminView} >
-        Admin View
-      </button>
-  );
-}
 
 
 
@@ -71,6 +56,7 @@ function SigninButton(){
   const signin = async () => {
     
     navigate("/signin");
+
     closeNav();
   };
 
@@ -78,10 +64,13 @@ function SigninButton(){
       <button className="btn btn-danger btn-lg btn-outline-dark text-dark" onClick={signin} >
         Sign in
       </button>
+
   );
 }
 
-function openNav() {
+function OpenNav() {
+
+
   document.getElementById("myNav").style.width = "100%";
 }
 
@@ -90,32 +79,21 @@ function closeNav() {
 }
 
 function App() {
+  const account = useSelector((state) => state.accountReducer.account);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [account, setAccount] = useState(null);
-
-  
-
-
-  const fetchAccount = async () => {
-    
-    const account = await client.account();
-    setAccount(account);
-    
-  };
-
-  useEffect(() => {
-    fetchAccount();
-  }, []);
 
 
   useEffect(() => {
     // Check if the user's role is ADMIN and update isAdmin state accordingly
-    if (accountData && accountData.role === 'ADMIN') {
+    console.log("before check");
+    console.log(account)
+    if (account && account.role === 'ADMIN') {
+      console.log("ADMIN IS SET AS TRUE")
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
     }
-  }, [accountData]);
+  }, []);
 
   return (
     <Provider store={store}>
@@ -129,13 +107,13 @@ function App() {
               </div>
 
 
-              {/*<button className="btn nav-design justify-content-end" onClick={openNav}>*/}
+              {/*<button className="btn nav-design justify-content-end" onClick={OpenNav}>*/}
               {/*  <i className="fa-solid fa-bars fa-2xl"></i>*/}
               {/*  */}
               {/*</button>*/}
 
               <div onTouchStart="">
-                <button className="  button-82-pushable justify-content-end" role="button" onClick={openNav}>
+                <button className="  button-82-pushable justify-content-end" role="button" onClick={OpenNav}>
 
                   <span className="button-82-shadow"></span>
                   <span className="button-82-edge"></span>
@@ -178,13 +156,6 @@ function App() {
                   <li className="menu-text" >
                     <SigninButton/>
                     <SignoutButton/>
-                    {isAdmin &&(
-
-                        <div>
-                          <AdminView/>
-                        </div>
-
-                    )}
                   </li>
 
                 </ul>
@@ -208,11 +179,14 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userslist" element={<Userslist />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/account/:accountId" element={<Account />} />
                 <Route path="/search/*" element={<Search />} />
                 <Route path="search/:query" element={<Results />} />
                 <Route path="details/:id" element={<Details />} />
                 <Route path="review/:movieId" element={<Review />} />
                 <Route path="account/reviews" element={<UserReviews />} />
+                <Route path="account/reviews/:reviewId" element={<UserReviews />} />
+
                 <Route path="account/reviews/edit/:reviewId" element={<ReviewEditor />} />
                 <Route path="/home" element={<Home/>} />
 
