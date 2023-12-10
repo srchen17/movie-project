@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import {
   setAccount, setLoggedIn,
   } from "./accountReducer";
+import './account.css';
 
 export let accountData = null;
 function Account() {
   const [account, setAccount] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   const navigate = useNavigate();
   const save = async () => {
@@ -23,7 +25,11 @@ function Account() {
     const account = await client.account();
     setAccount(account);
     accountData = account;
-    
+
+    // fetch user reviews to be displayed in profile
+    const reviewsResponse = await reviewsClient.findReviewByUserId(accountData._id);
+    setReviews(reviewsResponse);
+    console.log(reviewsResponse);
   };
 
 
@@ -85,13 +91,33 @@ function Account() {
                     <span className="badge bg-primary rounded-pill">15</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-start">
-                    <div className="ms-2 me-auto">
-                     <Link to='/account/reviews'>Reviews </Link>
-
+                    <div className="ms-2">
+                     <Link to='/account/reviews'>
+                      <button class="btn btn-primary">
+                      View All Reviews
+                        </button> </Link>
                     </div>
-                    <span className="badge bg-primary rounded-pill">15</span>
                   </li>
                 </ul>
+
+
+                <div class="p-4">
+                 <h1>Your Recent Reviews</h1>
+                 <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                        {reviews.map((review) => (
+                            <Link to={`/account/reviews`}>
+                                <div className="card review-card m-3 d-flex justify-content-center">
+                                    <li className="list-group-item">
+                                        <h2> {review.rating} / 100 </h2>
+                                        <p> {review.review} </p>
+                                    </li>
+                                </div>
+                            </Link>
+                        ))}
+                    </ul>
+
+                </div>
+           
 
 
               </div>

@@ -9,14 +9,11 @@ export const BASE_API = "http://localhost:4000"
 export const REVIEWS_API = `${BASE_API}/api/reviews`;
 
 export const createReview = async (review) => {
-    try {
-    const response = await axios.post(`${REVIEWS_API}`, review);
-    return response.data;
-    }
-    catch (err) {
-        console.log(err);
-    }
+        const response = await axios.post(`${REVIEWS_API}`, review);
+        return response.data;
+    
 };
+
 export const findAllReviews = async () => {
     const response = await axios.get(`${REVIEWS_API}`);
     return response.data;
