@@ -1,90 +1,59 @@
 
+/* Banner image*/
+.review-form .banner-img {
+    height: 200px;
+    width: auto;
+    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 50%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 50%);
+ }
 
-/*Account*/
-.account-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/*Review form header*/
+.review-form h2 {
+    margin-bottom: 30px;
 }
 
-.bad-computer{
-    width:150px;
-    margin-right:50px;
-}
-.account-info{
-
-    width:500px;
-    height:400px;
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-
-    /*justify-content: center;*/
+/*Review form movie poster*/
+.review-form  .movie-poster {
+    padding-left: none;
+    border-radius: 10px;
+    box-shadow: 5px 3px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
-.account-info2{
+.review-form .movie-poster:hover {
+    transition: transform 0.4s ease;
+    /* min-width: 190px; */
+    transform: scale(1.01);
+    /* min-height: 255px; */
+    /* max-width: 180px;
+    max-height: 255px;; */
+    
+  }
 
-    width:500px;
-    height:400px;
-    display: flex;
-    margin-left: 150px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /*justify-content: center;*/
+
+/*Review form buttons */
+.review-form .btn {
+    padding: 12px;
+    border-radius: 20px;
+    box-shadow: 5px 3px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
-.account-stats{
-    margin-top: 60px;
-    width:400px;
+.review-form .btn:hover {
+    transition: transform 0.4s ease;
+    /* min-width: 190px; */
+    transform: scale(1.03);
 }
 
-.account-modal{
-
-
-    width:500px;
-    height:600px;
-    display: flex;
-    margin-left: 100px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.right-side{
-    padding: 20px;
-}
-@media (max-width: 900px) {
-    .right-side {
-        display: none;
-    }
-}
-
-.account-inputs{
-    width:300px;
-    height:50px;
-    display: table-cell;
-    vertical-align: middle;
-    margin-bottom: 25px;
-
-}
-
-
-/*Sign up and sign in */
-.review-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/*Review container*/
+.review-container {
+    max-width: 900px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 3px 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
 }
 
 .review-container textarea {
-
-        width: 300px;
-        height: 150px;
-
+    min-height: 300px;
 }
 
 .review-inputs{
@@ -98,6 +67,11 @@
 .error-message{
     color:red;
 }
+
+.edit-form .btn-danger {
+    background-color: rgb(168, 20, 20);
+}
+
 .review-modal{
     vertical-align: middle;
     width:500px;
@@ -106,125 +80,4 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-
-/*userlist*/
-
-.user-table{
-    padding-left: 30px;
-    padding-right: 0px;
-    width:84%
-
-}
-
-.contact-info{
-    width:340px;
-
-}
-
-.dashboard-container{
-
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-
-    width:90%;
-    margin-left:80px;
-}
-.header{
-    width:140px;
-}
-
-.chakra-modal-editUserModal {
-    height:600px;
-    max-width:1000px;
-}
-.chakra-modal{
-    height:600px;
-    max-width:1000px;
-}
-
-.edit-container{
-    width:1000px !important;
-    margin-left:25px !important;
-    margin-right:25px !important;
-}
-
-
-.table-row{
-    width:100% !important;
-}
-.account-options{
-    width:100px !important;
-
-}
-
-
-
-
-
-/*IGNORE for button aesthetics*/
-
-
-/*delete button*/
-
-
-.delete-button {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    /*background-color: rgb(20, 20, 20);*/
-    background-color: rgba(202, 31, 31, 0.62);
-    border: solid;
-    border-color:red;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /*box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);*/
-    cursor: pointer;
-    transition-duration: .3s;
-    overflow: hidden;
-    position: relative;
-}
-
-.svgIcon {
-    width: 12px;
-    transition-duration: .3s;
-}
-
-.svgIcon path {
-    fill: white;
-}
-
-.delete-button:hover {
-    width: 140px;
-    border-radius: 50px;
-    transition-duration: .5s;
-    background-color: rgb(255, 69, 69);
-    align-items: center;
-}
-
-.delete-button:hover .svgIcon {
-    width: 50px;
-    transition-duration: .3s;
-    transform: translateY(60%);
-}
-
-.delete-button::before {
-    position: absolute;
-    top: -20px;
-    content: "Delete";
-    color: white;
-    transition-duration: .3s;
-    font-size: 2px;
-}
-
-.delete-button:hover::before {
-    font-size: 13px;
-    opacity: 1;
-    transform: translateY(30px);
-    transition-duration: .3s;
 }

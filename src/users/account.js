@@ -7,6 +7,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   setAccount, setLoggedIn,
   } from "./accountReducer";
+
+import './account.css';
+
 import {Button, useToast} from "@chakra-ui/react";
 import {CgProfile} from "react-icons/cg";
 
@@ -106,6 +109,17 @@ function Account() {
   const dispatch = useDispatch();
 
 
+//   const fetchAccount = async () => {
+//     const account = await client.account();
+//     setAccount(account);
+//     accountData = account;
+
+//     // fetch user reviews to be displayed in profile
+//     const reviewsResponse = await reviewsClient.findReviewByUserId(accountData._id);
+//     setReviews(reviewsResponse);
+//     console.log(reviewsResponse);
+
+
   const fetchAuthor = async () => {
     console.log("FETCHING AUTHOR")
     if (accountId != null  ){
@@ -135,7 +149,6 @@ function Account() {
     }else{
       console.log("trying to get reviews with no author and not logged in ");
     }
-
 
   };
 
@@ -198,6 +211,42 @@ function Account() {
 
     // fetchFollowInfo();
 
+
+//                     </div>
+//                     <span className="badge bg-primary rounded-pill">15</span>
+//                   </li>
+//                   <li className="list-group-item d-flex justify-content-between align-items-start">
+//                     <div className="ms-2">
+//                      <Link to='/account/reviews'>
+//                       <button class="btn btn-primary">
+//                       View All Reviews
+//                         </button> </Link>
+//                     </div>
+//                   </li>
+//                 </ul>
+
+
+//                 <div class="p-4">
+//                  <h1>Your Recent Reviews</h1>
+//                  <ul className="list-group list-group-horizontal position-relative overflow-auto">
+//                         {reviews.map((review) => (
+//                             <Link to={`/account/reviews`}>
+//                                 <div className="card review-card m-3 d-flex justify-content-center">
+//                                     <li className="list-group-item">
+//                                         <h2> {review.rating} / 100 </h2>
+//                                         <p> {review.review} </p>
+//                                     </li>
+//                                 </div>
+//                             </Link>
+//                         ))}
+//                     </ul>
+
+//                 </div>
+           
+
+
+//               </div>                      
+                      
   }, [accountId]);
 
   // then if author is updated fetch reviews  (or just with account)
@@ -217,6 +266,7 @@ function Account() {
       fetchFollowInfo(author);
     }
   }, [logged_in, account, author]);
+
 
 
 
