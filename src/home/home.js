@@ -8,11 +8,9 @@ import * as reviewsClient from "../reviews/client";
 import * as usersClient from "../users/client";
 
 import { CgProfile } from "react-icons/cg";
-import { FaHome } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
-import {useNavigate} from "react-router";
-
-function AdminView(){
+function AdminView() {
     const navigate = useNavigate();
     const adminView = async () => {
         navigate("/userslist");
@@ -44,14 +42,7 @@ function Home() {
     const [bannerMovie, setBannerMovie] = useState("");
     // get trending moives 
     const [trendingMovies, setTrendingMovies] = useState([]);
-    // get movies linked to the reviews 
-    const [reviewMovies, setReviewMovies] = useState([]);
-   
 
-    const addMovieToReview = async (review) => {
-        const movie = await axios.get(`https://api.themoviedb.org/3/movie/${review.movie_id}?api_key=${REACT_APP_API_KEY}`);
-        return ({...review, movie: movie.data});
-    }
 
     // function that fetches results from the server 
     const fetchResults = async (genre1, genre2, genre3, genre4) => {
@@ -114,29 +105,26 @@ function Home() {
     }, []);
 
     return (
-
-
         <div class="home">
             <div class="crop">
-            <Link to={`/details/${bannerMovie.id}`}>
+                <Link to={`/details/${bannerMovie.id}`}>
                     <img className=""
-                            src={`https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}`}
-                            alt="Card image cap" />
+                        src={`https://image.tmdb.org/t/p/original/${bannerMovie.backdrop_path}`}
+                        alt="Card image cap" />
                 </Link>
             </div>
             <div className="p-4">
                 <div>
                     <h1 className="p-3">Home</h1>
                     <div className="">
-                        {account && account.role =="ADMIN" && (
-                            <AdminView/>
+                        {account && account.role == "ADMIN" && (
+                            <AdminView />
                         )}
                     </div>
                 </div>
                 <div className="review-scroll-group">
                     <h3 className="genre-name">Recently Joined Users</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
-
                         {latestUsers.map((user) => (
                             <Link to={`/account/${user._id}`}>
                                 <div className="card profile-card m-3 d-flex justify-content-center">
@@ -154,147 +142,121 @@ function Home() {
                     </ul>
                 </div>
 
-
-                {/*<div className="review-scroll-group">*/}
-                {/*    {!logged_in && (*/}
-                {/*        <h3 className="genre-name">Recent Reviews</h3>*/}
-                {/*    )}*/}
-                {/*    {logged_in && (*/}
-                {/*        <h3 className="genre-name">Your Recent Reviews</h3>*/}
-                {/*    )}*/}
-                {/*    <ul className="list-group list-group-horizontal position-relative overflow-auto">*/}
-                {/*        {reviews.map((review) => (*/}
-                {/*            <Link to={`/account/reviews`}>*/}
-                {/*                <div className="card review-card m-3 d-flex justify-content-center">*/}
-                {/*                    <li className="list-group-item">*/}
-                {/*                        <h2> {review.rating} / 100 </h2>*/}
-                {/*                        <p> {review.review} </p>*/}
-                {/*                    </li>*/}
-                {/*                </div>*/}
-                {/*            </Link>*/}
-                {/*        ))}*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
-
-
-
                 <div className="review-scroll-group">
-
-//                     {!logged_in && (
-//                         <h3 className="genre-name">Recent Reviews</h3>
-//                     )}
-//                     {logged_in && (
-//                         <h3 className="genre-name">Your Recent Reviews</h3>
-//                     )}
-//                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
-//                         {reviews.map((review) => (
-//                             <Link to={`/account/reviews`}>
-//                                 <div className="card review-card m-3 d-flex justify-content-center">
-//                                     <li className="list-group-item">
-//                                         <h2> {review.rating} / 100 </h2>
-//                                         <p> {review.review} </p>
-//                                     </li>
-//                                 </div>
-//                             </Link>
-//                         ))}
-//                     </ul>
-//                 </div>
-
-//                 <div className="movie-display-group">
-//                     <div className="movie-scroll-group">
-//                         <h3 className="genre-name">Trending</h3>
-//                         <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
-//                             {trendingMovies.map((movie) => (
-
-                        {!logged_in && (
-                            <h3 className="genre-name">Recent Reviews</h3>
-                        )}
-                        {logged_in && (
-                            <h3 className="genre-name">Your Recent Reviews</h3>
-                        )}
-
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                    {!logged_in && (
+                        <h3 className="genre-name">Recent Reviews</h3>
+                    )}
+                    {logged_in && (
+                        <h3 className="genre-name">Your Recent Reviews</h3>
+                    )}
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto">
                         {reviews.map((review) => (
-                        <Link to={`/account/reviews/${review._id}`}>
-                            <div className="card review-card m-3 d-flex justify-content-center">
-
-                                <li className="list-group-item">
-                                    <div className="card movie-card">
-                                        <Link to={`/details/${movie.id}`}>
-                                            <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                                                alt="Card image cap" />
-                                        </Link>
+                            <div>
+                                <Link to={`/account/reviews/${review._id}`}>
+                                    <div className="card review-card m-3 d-flex justify-content-center">
+                                        <li className="list-group-item">
+                                            <h2> {review.rating} / 100 </h2>
+                                            <p> {review.review} </p>
+                                        </li>
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="movie-scroll-group">
-                        <h3 className="genre-name">Action</h3>
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
-                            {group1Results.map((movie) => (
-                                <li className="list-group-item">
-
-                                    <div className="card movie-card">
-                                        <Link to={`/details/${movie.id}`}>
+                                </Link>
+                                {/* <Link to={`/account/reviews/${review._id}`}>
+                                    <div className="card review-card m-3 d-flex justify-content-center">
+                                        <li className="list-group-item">
+                                            <div className="card movie-card">
+                                                 <Link to={`/details/${movie.id}`}>
                                             <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                                                 alt="Card image cap" />
-                                        </Link>
+                                        </Link> 
+                                            </div>
+                                        </li>
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="movie-scroll-group">
-                        <h3 className="genre-name">Comedy</h3>
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto ">
-                            {group2Results.map((movie) => (
-                                <Link to={`/details/${movie.id}`}>
-                                    <li className="list-group-item">
-                                        <div className="card movie-card">
-                                            <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                                                alt="Card image cap" />
-                                        </div>
-                                    </li>
-                                </Link>
-
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="movie-scroll-group">
-                        <h3 className="genre-name">Documentary</h3>
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto">
-                            {group3Results.map((movie) => (
-                                <Link to={`/details/${movie.id}`}>
-                                    <li className="list-group-item">
-                                        <div className="card movie-card">
-                                            <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                                                alt="Card image cap" />
-                                        </div>
-                                    </li>
-                                </Link>
-
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="movie-scroll-group">
-                        <h3 className="genre-name">Science Fiction</h3>
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto">
-                            {group4Results.map((movie) => (
-                                <Link to={`/details/${movie.id}`}>
-                                    <li className="list-group-item">
-                                        <div className="card movie-card">
-                                            <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                                                alt="Card image cap" />
-                                        </div>
-                                    </li>
-                                </Link>
-                            ))}
-                        </ul>
-                    </div>
+                                </Link> */}
+                            </div>
+                        ))}
+                    </ul>
                 </div>
+                <div className="movie-scroll-group">
+                    <h3 className="genre-name">Trending</h3>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
+                        {trendingMovies.map((movie) => (
+                            <li className="list-group-item">
+                                <div className="card movie-card">
+                                    <Link to={`/details/${movie.id}`}>
+                                        <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                            alt="Card image cap" />
+                                    </Link>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="movie-scroll-group">
+                    <h3 className="genre-name">Action</h3>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">
+                        {group1Results.map((movie) => (
+                            <li className="list-group-item">
+                                <div className="card movie-card">
+                                    <Link to={`/details/${movie.id}`}>
+                                        <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                            alt="Card image cap" />
+                                    </Link>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="movie-scroll-group">
+                    <h3 className="genre-name">Comedy</h3>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto ">
+                        {group2Results.map((movie) => (
+                            <Link to={`/details/${movie.id}`}>
+                                <li className="list-group-item">
+                                    <div className="card movie-card">
+                                        <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                            alt="Card image cap" />
+                                    </div>
+                                </li>
+                            </Link>
+
+                        ))}
+                    </ul>
+                </div>
+                <div className="movie-scroll-group">
+                    <h3 className="genre-name">Documentary</h3>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                        {group3Results.map((movie) => (
+                            <Link to={`/details/${movie.id}`}>
+                                <li className="list-group-item">
+                                    <div className="card movie-card">
+                                        <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                            alt="Card image cap" />
+                                    </div>
+                                </li>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+
+                <div className="movie-scroll-group">
+                    <h3 className="genre-name">Science Fiction</h3>
+                    <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                        {group4Results.map((movie) => (
+                            <Link to={`/details/${movie.id}`}>
+                                <li className="list-group-item">
+                                    <div className="card movie-card">
+                                        <img className="card-img-top movie-card-image" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                            alt="Card image cap" />
+                                    </div>
+                                </li>
+                            </Link>
+                        ))}
+                    </ul>
+                </div>
+
             </div>
         </div>
+
     )
 }
 
