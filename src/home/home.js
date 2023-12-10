@@ -18,9 +18,8 @@ function AdminView(){
         navigate("/userslist");
     };
 
-
     return (
-        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark" onClick={adminView} >
+        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark " onClick={adminView} >
             Admin View
         </button>
     );
@@ -104,26 +103,27 @@ function Home() {
 
 
         <div class="home">
-           
-            {/* <div class="banner-img">
-                        <img class="card-img-top " 
-                         src="../assets/gradient.jpg"
-                          alt="Card image cap"/>
-                    </div> */}
-            <div className="p-4">
+
+            <div className="">
+
+
                 <div>
                     <h1 className="p-3">Home</h1>
-                    {/* <FaHome size={35}/> */}
+                    <div className="">
+                        {account && account.role =="ADMIN" && (
+                            <AdminView/>
+                        )}
+                    </div>
                 </div>
-                
-               
+
+
 
                 <div className="review-scroll-group">   
                         <h3 className="genre-name">Recently Joined Users</h3>
                         <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                         {latestUsers.map((user) => (
-                            <Link to={`/account/reviews`}>
+                            <Link to={`/account/${user._id}`}>
                                 <div className="card profile-card m-3 d-flex justify-content-center">
                                     <div className="">
                                         <div className="d-flex justify-content-center">
@@ -139,70 +139,41 @@ function Home() {
                         </ul>
                 </div>
 
-  
+                {/*<div className="review-scroll-group">*/}
+                {/*    {!logged_in && (*/}
+                {/*        <h3 className="genre-name">Recent Reviews</h3>*/}
+                {/*    )}*/}
+                {/*    {logged_in && (*/}
+                {/*        <h3 className="genre-name">Your Recent Reviews</h3>*/}
+                {/*    )}*/}
+                {/*    <ul className="list-group list-group-horizontal position-relative overflow-auto">*/}
+                {/*        {reviews.map((review) => (*/}
+                {/*            <Link to={`/account/reviews`}>*/}
+                {/*                <div className="card review-card m-3 d-flex justify-content-center">*/}
+                {/*                    <li className="list-group-item">*/}
+                {/*                        <h2> {review.rating} / 100 </h2>*/}
+                {/*                        <p> {review.review} </p>*/}
+                {/*                    </li>*/}
+                {/*                </div>*/}
+                {/*            </Link>*/}
+                {/*        ))}*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
+
 
 
                 <div className="review-scroll-group">
                         {!logged_in && (
-                        <h3 className="genre-name">Recent Reviews</h3>
+                            <h3 className="genre-name">Recent Reviews</h3>
                         )}
                         {logged_in && (
                             <h3 className="genre-name">Your Recent Reviews</h3>
                         )}
+
                         <ul className="list-group list-group-horizontal position-relative overflow-auto">
                         {reviews.map((review) => (
-                        <Link to={`/account/reviews`}>
+                        <Link to={`/account/reviews/${review._id}`}>
                             <div className="card review-card m-3 d-flex justify-content-center">
-
-
-{/*        <div className="movie-display-group ">*/}
-{/*            /!*{!logged_in && (*!/*/}
-
-{/*            /!*    // <div className="account-container">*!/*/}
-{/*            /!*    <div >*!/*/}
-
-{/*            /!*        <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer" />*!/*/}
-{/*            /!*        <h1> You are not logged in (home)</h1>*!/*/}
-
-
-{/*            /!*    </div>*!/*/}
-{/*            /!*)}*!/*/}
-
-{/*                <div>*/}
-{/*                    <AdminView/>*/}
-{/*                    <h1>Recently Joined Users</h1>*/}
-{/*                    <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">*/}
-{/*                    {latestUsers.map((user) => (*/}
-{/*                        <Link to={`/account/reviews`}>*/}
-{/*                            <div className="card">*/}
-{/*                                <li className="list-group-item">*/}
-{/*                                    <h2> {user.username} </h2>*/}
-{/*                                   */}
-{/*                                </li>*/}
-
-{/*                            </div>*/}
-{/*                        </Link>*/}
-
-{/*                    ))}*/}
-{/*                </ul>*/}
-
-{/*                </div>*/}
-{/*           */}
-
-{/*            <div className="p-3">*/}
-{/*                {!logged_in && (*/}
-{/*                    <h1>Recent Reviews</h1>*/}
-{/*            )}*/}
-{/*             {logged_in && (*/}
-{/*                    <h1>Your Reviews</h1>*/}
-{/*            )}*/}
-
-{/*                */}
-{/*                <ul className="list-group list-group-horizontal position-relative overflow-auto movie-scroll-group">*/}
-{/*                    {reviews.map((review) => (*/}
-{/*                        <Link to={`/account/reviews/${review._id}`}>*/}
-{/*                            <div className="card">*/}
-{/**/}
                                 <li className="list-group-item">
                                     <h2> {review.rating} / 100 </h2>
                                     <p> {review.review} </p>

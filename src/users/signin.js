@@ -21,14 +21,15 @@ function Signin() {
     const signin = async () => {
         try{
             console.log("IN THE TRY");
+            const value = await client.signin(credentials);
 
-            client.signin(credentials)
-            .then( (value) => 
-                dispatch(setAccount(value))
-            ).then(dispatch(setLoggedIn(true)));
-            
+            dispatch(setAccount(value));
+            dispatch(setLoggedIn(true));
+
             navigate("/account");
         }catch (error){
+            console.log("THIS IS THE ERROR")
+
             if (error.response) {
                 setErrorMessage(error.response.data.message)
             } else {

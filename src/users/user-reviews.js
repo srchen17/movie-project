@@ -4,6 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import * as reviewsClient from "../reviews/client";
 import { useSelector, useDispatch} from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {findReviewById} from "../reviews/client";
 
 
@@ -12,14 +13,19 @@ export let accountData = null;
 function UserReviews() {
   const logged_in = useSelector((state) => state.accountReducer.logged_in);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
-  const { reviewId } = useParams();
+  const {reviewId } = useParams();
   const [reviews, setReviews] = useState([]);
-  const [review, setReview] = useState(null);
+  const [review, setReview] = useState();
   const [author, setAuthor] = useState(null);
+  let authorId = null;
+  const REACT_APP_API_KEY = 'f085601780dbbd04b0f1dcb3c4438d12';
+
+
   const [movie, setMovie] = useState("");
   const account = useSelector((state) => state.accountReducer.account);
 
-
+  console.log("STARTED");
+  console.log(reviewId)
   const navigate = useNavigate();
 
 
@@ -30,48 +36,81 @@ function UserReviews() {
     // const movieResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${REACT_APP_API_KEY}`);
     // setMovie(movieResponse.data);
     // console.log(JSON.stringify(movie))
-
+    console.log("FETCHING REVIEWS")
     console.log(reviewId)
-    if (logged_in){
+    if (logged_in && reviewId == account._id){
+
       const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
       setReviews(reviewsResponse);
     }else{
+      console.log("IN THE ELSE")
+      console.log(reviewId)
       const reviewsResponse = await reviewsClient.findReviewById(reviewId);
-      // console.log(reviewsResponse)
+      console.log(reviewsResponse)
       setReview(reviewsResponse);
-      console.log(review);
-      if (review.user_id != null){
-        console.log("ADDING Author ID")
-        console.log(review.user_id);
-        const author = await client.findUserById(review.user_id);
-        setAuthor(author);
-      }
+
+      console.log("THIS IS REVIEW")
+      console.log(reviewsResponse.user_id);
+      const author = await client.findUserById(reviewsResponse.user_id);
+      setAuthor(author);
+      authorId = author._id;
+      console.log("THIS IS AUTHOR");
+      console.log(author._id);
+      console.log("THIS IS AUTHOR  2");
+      console.log(author.id);
+
+
 
 
     }
 
+
+
   };
+
+
+  const loadMovie = async () => {
+    console.log(review);
+
+    const response = await axios.get(`https://api.themoviedb.org/3/movie/${review.movie_id}?api_key=${REACT_APP_API_KEY}`);
+    setMovie(response.data);
+  };
+
 
   useEffect(() => {
     fetchReviews();
-  }, []);
+  }, [reviewId]);
+
+
+  useEffect(() => {
+    if (review){
+      loadMovie();
+    }
+
+  }, [review]);
+
+
 
   //console.log(account)
   //console.log(reviews[0])
   return (
     <div>
-      {!logged_in && review &&(
+      {((!logged_in && review && author) || (author && author !== account && review)) && (
 
         <div className="account-container">
+          <img className="review-img" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}></img>
 
           {/*<img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer"/>*/}
           {/*<h1> You are not logged in</h1>*/}
           {/*<h2>not logged in</h2>*/}
 
               <div>
+                {/*{author && author.user_id != null && (*/}
+                    {author && (
+                    <h2>Review written by <Link to={`/account/${author._id}`}> {author && author.username}</Link> </h2>
 
-                <h2>Review written by {author.firstName}</h2>
-                <hr/>
+                )}
+               <hr/>
                 <h2> {review.rating} / 100 </h2>
 
 
@@ -90,56 +129,9 @@ function UserReviews() {
 
 
 
-
-      {logged_in && account && (
-
-
-          <div className="account-container">
-            <div className="col-12 col-md-6 left-side">
-              <div class="account-info2">
-                <h1>
-                  Welcome, {account.username}!
-                </h1>
-                <h2>{account.firstName}{account.lastName}</h2>
-                <h4>{account.email}</h4>
-
-
-
-              <div className="account-stats">
-                <h1>Your reviews</h1>
-                <ul className="list-group ">
-                  {reviews.map((review) => (
-                        
-                            <div>
-                            <hr/>
-                                <h2> {review.rating} / 100 </h2>
-                                <p> {review.review} </p>
-                                <Link to={`/account/reviews/edit/${review._id}`}>
-                                <button>Edit</button>
-                                </Link>
-                                
-                                <hr/>
-                            </div>
-                       
-                       ))}
-                </ul>
-
-
-              </div>
-
-              </div>
-
-            </div>
-           
-
-          </div>
-
-
-      )}
-
-
     </div>
 
   );
 }
 export default UserReviews;
+

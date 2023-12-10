@@ -22,6 +22,7 @@ function ReviewEditor() {
       }
 
       useEffect(() => {
+
        fetchReview();
       }, []);
 

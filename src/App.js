@@ -179,6 +179,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userslist" element={<Userslist />} />
                 <Route path="/account" element={<Account />} />
+                <Route path="/account/:accountId" element={<Account />} />
                 <Route path="/search/*" element={<Search />} />
                 <Route path="search/:query" element={<Results />} />
                 <Route path="details/:id" element={<Details />} />

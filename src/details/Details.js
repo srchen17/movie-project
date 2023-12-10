@@ -79,7 +79,7 @@ function Details() {
                        
                         <h3>Reviews</h3>
                         {reviews.map((review) => (
-                            <Link to={`/details/${movie.id}`}>
+                            <Link to={`/account/reviews/${review._id}`}>
                                 <div>
                                     <hr />
                                     <h2> {review.rating} / 100 </h2>

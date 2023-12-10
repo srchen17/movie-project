@@ -1,4 +1,9 @@
 
+/*reviews*/
+.review-img{
+    height:600px;
+    margin-right: 70px;
+}
 
 /*Account*/
 .account-container{
@@ -36,6 +41,27 @@
     /*justify-content: center;*/
 }
 
+
+.account-info3{
+
+    width:500px;
+    height:400px;
+    display: flex;
+    margin-left: 150px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.account-info3 h1{
+    font-size: 65px;
+    font-family: 'Archivo Black', sans-serif;
+    margin-bottom: 50px;
+
+}
+
 .account-stats{
     margin-top: 60px;
     width:400px;
@@ -71,6 +97,15 @@
 
 }
 
+
+/*Followers*/
+.account-info-group{
+    /*height:60px;*/
+    /*font-size: 20px;*/
+}
+.follower-info{
+    width:345px;
+}
 
 /*Sign up and sign in */
 .signin-container{
@@ -115,6 +150,7 @@
     width:84%
 
 }
+
 
 .contact-info{
     width:340px;
