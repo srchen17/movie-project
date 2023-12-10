@@ -101,7 +101,7 @@ function Home() {
 
     // fetch results 
     useEffect(() => {
-        fetchResults(28, 35, 99, 878);
+        fetchResults(28, 35, 16, 878);
     }, []);
 
     return (
@@ -223,7 +223,7 @@ function Home() {
                     </ul>
                 </div>
                 <div className="movie-scroll-group">
-                    <h3 className="genre-name">Documentary</h3>
+                    <h3 className="genre-name">Animation</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
                         {group3Results.map((movie) => (
                             <Link to={`/details/${movie.id}`}>
@@ -237,7 +237,6 @@ function Home() {
                         ))}
                     </ul>
                 </div>
-
                 <div className="movie-scroll-group">
                     <h3 className="genre-name">Science Fiction</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">

@@ -42,7 +42,7 @@ function Review() {
         try {
             console.log(content);
             await client.createReview(content);
-            navigate("/account/reviews");
+            navigate("/account");
         } catch (err) {
             if (err.response && err.response.data && err.response.data.message) {
                 setErrorMessage( "Error: " + err.response.data.message);
