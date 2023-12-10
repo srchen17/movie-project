@@ -92,7 +92,7 @@ function Account() {
       navigate("/signin")
     }
 
-    fetchFollowInfo();
+    //fetchFollowInfo();
 
   };
 
@@ -107,70 +107,137 @@ function Account() {
 
 
   const fetchAuthor = async () => {
-    if (accountId != null ){
-      console.log("AUTHOR SET")
+    console.log("FETCHING AUTHOR")
+    if (accountId != null  ){
+      console.log("AUTHOR SETting in fetch author")
       console.log(accountId)
       const author = await client.findUserById(accountId);
       setAuthor(author);
       console.log("author: ");
       console.log(author);
-      console.log(author);
-      console.log(author);
+    }else if (account){
+      const author = await client.findUserById(account._id);
+      setAuthor(author);
     }
   }
 
   const fetchReviews = async () => {
-
+    console.log("FETCHING REVEIEWS")
 
     if (logged_in) {
-      console.log("getting your reviews ");
+      console.log("getting your reviews loggedin ");
       const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
       setReviews(reviewsResponse);
-    } else{
-      console.log("getting author's reviews ");
+    } else if (author){
+      console.log("getting author's reviews not logged in");
       const reviewsResponse = await reviewsClient.findReviewByUserId(author._id);
       setReviews(reviewsResponse);
+    }else{
+      console.log("trying to get reviews with no author and not logged in ");
     }
 
 
   };
 
+
+
+
+
   const fetchFollowInfo = async() => {
-    if (logged_in){
-      const followersResponse = await client.findAllFollowersByUserId(account._id);
+    console.log("---FETCHING FOLLOW INFO---")
+    if (logged_in && !author){
+
+      if (account){
+        const followersResponse = await client.findAllFollowersByUserId(account._id);
+        console.log(followersResponse)
+        setFollowers([...followersResponse]);
+        console.log("SET FOLLOWERS")
+        console.log(followers)
+
+
+
+        const followingResponse = await client.findAllFollowingByUserId(account._id);
+        console.log(followingResponse)
+        setFollowing([...followingResponse]);
+        console.log("SET FOLLOWING")
+        console.log(following)
+      }else{
+        console.log("logged in but no account?")
+      }
+
+    }else{
+      console.log("----FETCHING FOLLOW INFO  author---")
+      const followersResponse = await client.findAllFollowersByUserId(author._id);
       console.log(followersResponse)
-      setFollowers(followersResponse);
+      setFollowers([...followersResponse]);
+      console.log("AUTHOR");
+      console.log(author);
       console.log("SET FOLLOWERS")
       console.log(followers)
 
 
-
-      const followingResponse = await client.findAllFollowingByUserId(account._id);
+      const followingResponse = await client.findAllFollowingByUserId(author._id);
       console.log(followingResponse)
-      setFollowing(followingResponse);
+      setFollowing([...followingResponse]);
       console.log("SET FOLLOWING")
       console.log(following)
+
+
+      console.log("THIS IS CURRENT AUTHOR")
+      console.log(author)
     }
 
 
   };
 
-
+// fetch author is the first thing to check
   useEffect(() => {
     if (accountId){
       fetchAuthor();
     }
 
-    fetchFollowInfo();
+    // fetchFollowInfo();
+
   }, [accountId]);
 
+  // then if author is updated fetch reviews  (or just with account)
   useEffect(() => {
-    if (author){
+    if (author) {
+      fetchReviews();
+    } else if (account && logged_in) {
       fetchReviews();
     }
+  }, [author, account]);
 
-    fetchFollowInfo();
-  }, [author]);
+  // then fetch follower info
+  useEffect(() => {
+    if (logged_in) {
+      fetchFollowInfo(account);
+    } else if (author) {
+      fetchFollowInfo(author);
+    }
+  }, [logged_in, account, author]);
+
+
+
+  //
+  // useEffect(() => {
+  //   if (author){
+  //     fetchReviews();
+  //   }
+  //
+  //
+  //   fetchFollowInfo();
+  // }, [author, account]);
+
+
+
+  // useEffect(() => {
+  //   if (account){
+  //     fetchFollowInfo();
+  //   }
+  // }, [account]);
+
 
 
   //console.log(author)
@@ -209,14 +276,14 @@ function Account() {
                                 <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                                   {followers.map((follower) => (
-                                      <Link to={`/account/${follower._id}`}>
+                                      <Link to={`/account/${follower}`}>
                                         <div className="card profile-card m-3 d-flex justify-content-center">
                                           <div className="">
                                             <div className="d-flex justify-content-center">
                                               <CgProfile size={100}/>
                                             </div>
                                             <li className="list-group-item">
-                                              <h6> {follower.username} </h6>
+                                              <h6> {follower} </h6>
                                             </li>
                                           </div>
                                         </div>
@@ -246,14 +313,14 @@ function Account() {
                               <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                                 {following.map((follower) => (
-                                    <Link to={`/account/${follower._id}`}>
+                                    <Link to={`/account/${follower}`}>
                                       <div className="card profile-card m-3 d-flex justify-content-center">
                                         <div className="">
                                           <div className="d-flex justify-content-center">
                                             <CgProfile size={100}/>
                                           </div>
                                           <li className="list-group-item">
-                                            <h6> {follower.username} </h6>
+                                            <h6> {follower} </h6>
                                           </li>
                                         </div>
                                       </div>
@@ -393,14 +460,14 @@ function Account() {
                                       <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                                         {followers.map((follower) => (
-                                            <Link to={`/account/${follower._id}`}>
+                                            <Link to={`/account/${follower}`}>
                                               <div className="card profile-card m-3 d-flex justify-content-center">
                                                 <div className="">
                                                   <div className="d-flex justify-content-center">
                                                     <CgProfile size={100}/>
                                                   </div>
                                                   <li className="list-group-item">
-                                                    <h6> {follower.username} </h6>
+                                                    <h6> {follower} </h6>
                                                   </li>
                                                 </div>
                                               </div>
@@ -430,14 +497,15 @@ function Account() {
                                       <ul className="list-group list-group-horizontal position-relative overflow-auto">
 
                                         {following.map((follower) => (
-                                            <Link to={`/account/${follower._id}`}>
+                                            <Link to={`/account/${follower}`}>
                                               <div className="card profile-card m-3 d-flex justify-content-center">
                                                 <div className="">
                                                   <div className="d-flex justify-content-center">
-                                                    <CgProfile size={100}/>
+                                                    <CgProfile size={80}/>
                                                   </div>
                                                   <li className="list-group-item">
-                                                    <h6> {follower.username} </h6>
+                                                    hello
+                                                    <h6>{follower} </h6>
                                                   </li>
                                                 </div>
                                               </div>
@@ -445,7 +513,7 @@ function Account() {
                                         ))}
                                       </ul>
                                   ):(
-                                      <p>You are not following anyone yet</p>
+                                      <p>No following anyone yet</p>
                                   )
 
                                   }
