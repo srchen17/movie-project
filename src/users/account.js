@@ -152,10 +152,6 @@ function Account() {
 
   };
 
-
-
-
-
   const fetchFollowInfo = async() => {
     console.log("---FETCHING FOLLOW INFO---")
     if (logged_in && !author){
@@ -166,8 +162,6 @@ function Account() {
         setFollowers([...followersResponse]);
         console.log("SET FOLLOWERS")
         console.log(followers)
-
-
 
         const followingResponse = await client.findAllFollowingByUserId(account._id);
         console.log(followingResponse)
@@ -195,11 +189,9 @@ function Account() {
       console.log("SET FOLLOWING")
       console.log(following)
 
-
       console.log("THIS IS CURRENT AUTHOR")
       console.log(author)
     }
-
 
   };
 
@@ -534,7 +526,6 @@ function Account() {
                                   }
 
                                 </CollapsibleComponent>
-
 
 
                               </div>
