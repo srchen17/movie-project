@@ -95,8 +95,8 @@ function ReviewEditor() {
                                 className="w-100 form-control review-inputs"
                                 value={review.review} onChange={(e) => setReview({ ...review, review: e.target.value })} />
                             <p class="text-danger">{errorMessage}</p>
-                            <button className="m-1 btn btn-primary w-100" onClick={updateReview}> Update Review </button>
-                            <button className="m-1 btn btn-danger w-100" onClick={deleteReview}> Delete Review </button>
+                            <button className="m-1 btn btn-danger w-100" onClick={updateReview}> Update Review </button>
+                            <button className="m-1 btn btn-dark w-100" onClick={deleteReview}> Delete Review </button>
                            
                         </div>
                         <div class="col d-none d-md-block p-5">

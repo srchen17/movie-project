@@ -387,7 +387,32 @@ function Account() {
 
                         <CollapsibleComponent title="Reviews">
                         {reviews && reviews.length > 0 ?(
-                        <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                          <div>
+                            <div className="d-flex justify-content-center p-3">
+                                 <div>
+                                  <h3 className="p-3">Your Reviews</h3>
+                                   <div className="cards">
+                                   {reviews.map((review, idx) => (
+                                    <Link to={`/account/reviews/${review._id}`}>
+                                         <div className="card review-card m-3 p-4">
+                                            {/* <p>
+                                               Title: {movies}
+                                             </p> */}
+                                             <li className="list-group-item">
+                                                   <h2> {review.rating} / 100 </h2>
+                                                   <p> Review: {review.review} </p>
+                                                   <Link to={`/account/reviews/edit/${review._id}`}>
+                                                     <button className="btn btn-primary">Edit</button>
+                                                   </Link>
+                                               </li>
+                                         </div>
+                                         </Link>
+                                   ))}
+                                   </div>
+                                   </div>
+                                   </div>
+
+                        {/* <ul className="list-group list-group-horizontal position-relative overflow-auto">
                           {reviews.map((review) => (
                               <Link to={`/account/reviews/${review._id}`}>
                                 <div className="card review-card m-3 d-flex justify-content-center">
@@ -398,7 +423,10 @@ function Account() {
                                 </div>
                               </Link>
                           ))}
-                        </ul>
+                        </ul> */}
+
+                          </div>
+                        
                             ):(
                             <p>You don't have any reviews yet</p>
                             )}
