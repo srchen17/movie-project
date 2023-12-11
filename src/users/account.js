@@ -327,13 +327,14 @@ function Account() {
 
                                   {followers.map((follower) => (
                                       <Link to={`/account/${follower}`}>
-                                        <div className="card profile-card m-3 d-flex justify-content-center">
+                                        <div className="card profile-card  m-3 d-flex justify-content-center">
                                           <div className="">
                                             <div className="d-flex justify-content-center">
-                                              <CgProfile size={100}/>
+                                              <CgProfile size={70}/>
                                             </div>
-                                            <li className="list-group-item">
-                                              <h6> {follower} </h6>
+                                            <li className="list-group-item" >
+                                              <p> {follower} </p>
+                                              <Button className="btn btn-outline-danger mb-3 btn-sm    text-dark" onClick={follow}> Remove  </Button>
                                             </li>
                                           </div>
                                         </div>
@@ -495,7 +496,9 @@ function Account() {
                         <h1>
                           @ {author.username}
                         </h1>
-                        <Button className="btn btn-warning mb-3 btn-lg btn-outline-dark text-dark" onClick={follow}> Follow  </Button>
+                        <div>
+                          <Button className="btn btn-warning mb-3 btn-lg mx-2 btn-outline-dark text-dark flext-left" onClick={follow}> Follow  </Button>
+                        </div>
 
                         <div className="account-stats">
                           <ul className="list-group ">

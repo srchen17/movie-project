@@ -91,3 +91,9 @@ export const findAllFollowingByUserId = async (id) => {
 };
 
 
+export const deleteFollower = async (id) => {
+    const response = await axios.delete(`${USERS_API}/followers/${id}`);
+    return response.data;
+};
+
+
