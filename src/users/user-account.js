@@ -15,26 +15,28 @@ import { CgProfile } from "react-icons/cg";
 import * as usersClient from "./client";
 export let accountData = null;
 
-
 function UserAccount() {
     const navigate = useNavigate();
+
+     // state
     const account = useSelector((state) => state.accountReducer.account);
+    const logged_in = useSelector((state) => state.accountReducer.logged_in);
+
     const [author, setAuthor] = useState(null);
     const [reviews, setReviews] = useState([]);
-    const logged_in = useSelector((state) => state.accountReducer.logged_in);
+
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
+
     // get account id for other users viewing
     const { accountId } = useParams();
 
     // collapse content
     const CollapsibleComponent = ({ title, children }) => {
         const [isCollapsed, setIsCollapsed] = useState(true);
-
         const toggleCollapse = () => {
             setIsCollapsed(!isCollapsed);
         };
-
         return (
             <div>
                 <button type="button" className="collapsible fw-bold" onClick={toggleCollapse}>
@@ -45,13 +47,9 @@ function UserAccount() {
                         {children}
                     </div>
                 )}
-
-
             </div>
         );
     };
-
-
 
 
     // save account information
@@ -63,13 +61,10 @@ function UserAccount() {
 
     // follow account if you are logged or get redirected to sign in
     const follow = async () => {
-
-
-        console.log("ABOUT TO FOLLLOW ");
+        // console.log("ABOUT TO FOLLLOW ");
         if (logged_in) {
-            console.log("FOLLOWING since im logged in ");
+            // console.log("FOLLOWING since im logged in ");
             await client.follow(account._id, author._id);
-
             //fetch information
             const updatedInfo = fetchFollowInfo();
             dispatch(setAccount(updatedInfo));
@@ -79,38 +74,23 @@ function UserAccount() {
                 duration: 9000,
                 isClosable: true,
             });
-
             console.log(account);
         } else {
-
             toast({
                 title: "Log in to follow users.",
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
             });
-
             navigate("/signin")
         }
-
-        //fetchFollowInfo();
-
     };
 
-
-
-
-
-
-
-
     const dispatch = useDispatch();
-
-
     const fetchAuthor = async () => {
-        console.log("FETCHING AUTHOR")
+        // console.log("FETCHING AUTHOR")
         if (accountId != null) {
-            console.log("AUTHOR SETting in fetch author")
+            // console.log("AUTHOR SETting in fetch author")
             console.log(accountId)
             const author = await client.findUserById(accountId);
             setAuthor(author);
@@ -124,7 +104,6 @@ function UserAccount() {
 
     const fetchReviews = async () => {
         console.log("FETCHING REVEIEWS")
-
         if (logged_in) {
             console.log("getting your reviews loggedin ");
             const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
@@ -140,57 +119,71 @@ function UserAccount() {
     };
 
     const fetchFollowInfo = async () => {
-        console.log("---FETCHING FOLLOW INFO---")
+        // console.log("---FETCHING FOLLOW INFO---")
         if (logged_in && !author) {
 
             if (account) {
                 const followersResponse = await client.findAllFollowersByUserId(account._id);
                 console.log(followersResponse)
                 setFollowers([...followersResponse]);
-                console.log("SET FOLLOWERS")
+                // console.log("SET FOLLOWERS")
                 console.log(followers)
 
                 const followingResponse = await client.findAllFollowingByUserId(account._id);
                 console.log(followingResponse)
                 setFollowing([...followingResponse]);
-                console.log("SET FOLLOWING")
-                console.log(following)
+                // console.log("SET FOLLOWING")
+                // console.log(following)
             } else {
                 console.log("logged in but no account?")
             }
 
         } else {
-            console.log("----FETCHING FOLLOW INFO  author---")
+            // console.log("----FETCHING FOLLOW INFO  author---")
             const followersResponse = await client.findAllFollowersByUserId(author._id);
             console.log(followersResponse)
             setFollowers([...followersResponse]);
-            console.log("AUTHOR");
-            console.log(author);
-            console.log("SET FOLLOWERS")
-            console.log(followers)
+            // console.log("AUTHOR");
+            // console.log(author);
+            // console.log("SET FOLLOWERS")
+            // console.log(followers)
 
 
             const followingResponse = await client.findAllFollowingByUserId(author._id);
-            console.log(followingResponse)
+            // console.log(followingResponse)
             setFollowing([...followingResponse]);
-            console.log("SET FOLLOWING")
-            console.log(following)
+            // console.log("SET FOLLOWING")
+            // console.log(following)
 
-            console.log("THIS IS CURRENT AUTHOR")
-            console.log(author)
+            // console.log("THIS IS CURRENT AUTHOR")
+            // console.log(author)
         }
 
     };
 
     // fetch author is the first thing to check
     useEffect(() => {
+        console.log("Fetch account");
+            usersClient.account()
+              .then((response) =>
+                dispatch(setAccount(response))
+            );
+            console.log("Update whether the user is logged in based on account");
+            usersClient.account()
+              .then((response) =>
+                dispatch(setLoggedIn(response != ""))
+            );
+        console.log("Set account as: ");
+        console.log(account);
+        console.log("Account ID:");
         console.log(accountId);
+        console.log("Logged in:");
         console.log(logged_in);
+        console.log("Author:");
         console.log(author);
         if (accountId) {
             fetchAuthor();
         }
-
     }, [accountId]);
 
     // then if author is updated fetch reviews  (or just with account)
@@ -221,10 +214,8 @@ function UserAccount() {
          
         `}
             </style>
-
             {/*Case 1: you are logged in and this is your account*/}
             {((logged_in && account && account == author) || (logged_in && account && accountId == null)) ? (
-
                 <div className="account-container">
                     <div className="col-12 col-md-6 left-side">
                         <div class="account-info2">
@@ -233,19 +224,13 @@ function UserAccount() {
                             </h1>
                             <h2>{account.firstName}  {account.lastName}</h2>
                             <h4>{account.email}</h4>
-
-
                             <div className="account-stats">
                                 <ul className="list-group ">
                                     <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
                                         <div className="ms-2 me-auto follower-info">
-
-
                                             <CollapsibleComponent title="Followers">
-
                                                 {followers && followers.length > 0 ? (
                                                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
-
                                                         {followers.map((follower) => (
                                                             <Link to={`/account/${follower}`}>
                                                                 <div className="card profile-card m-3 d-flex justify-content-center">
@@ -264,25 +249,16 @@ function UserAccount() {
                                                 ) : (
                                                     <p>You have no followers yet</p>
                                                 )
-
                                                 }
-
                                             </CollapsibleComponent>
-
-
-
                                         </div>
                                         <span className="badge bg-primary rounded-pill">{followers.length > 0 && followers.length || 0}</span>
                                     </li>
-
-
                                     <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
                                         <div className="ms-2 me-auto follower-info">
                                             <CollapsibleComponent title="Following">
-
                                                 {following && following.length > 0 ? (
                                                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
-
                                                         {following.map((follower) => (
                                                             <Link to={`/account/${follower}`}>
                                                                 <div className="card profile-card m-3 d-flex justify-content-center">
@@ -301,19 +277,13 @@ function UserAccount() {
                                                 ) : (
                                                     <p>You are not following anyone yet</p>
                                                 )
-
                                                 }
-
                                             </CollapsibleComponent>
-
-
-
                                         </div>
                                         <span className="badge  bg-primary rounded-pill">{following.length > 0 && following.length || 0}</span>
                                     </li>
                                     <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
                                         <div className="ms-2 me-auto follower-info">
-
                                             <CollapsibleComponent title="Reviews">
                                                 {reviews && reviews.length > 0 ? (
                                                     <div>
@@ -324,9 +294,6 @@ function UserAccount() {
                                                                     {reviews.map((review, idx) => (
                                                                         <Link to={`/account/reviews/${review._id}`}>
                                                                             <div className="card review-card m-3 p-4">
-                                                                                {/* <p>
-                                               Title: {movies}
-                                             </p> */}
                                                                                 <li className="list-group-item">
                                                                                     <h2> {review.rating} / 100 </h2>
                                                                                     <p> Review: {review.review} </p>
@@ -340,29 +307,20 @@ function UserAccount() {
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
-
                                                 ) : (
                                                     <p>You don't have any reviews yet</p>
                                                 )}
-
                                             </CollapsibleComponent>
-
                                         </div>
                                         <span className="badge bg-primary rounded-pill">{reviews.length > 0 && reviews.length || 0}</span>
                                     </li>
                                 </ul>
-
-
                             </div>
-
                         </div>
-
                     </div>
                     <div className="col-12 col-md-6 right-side d-none d-lg-block">
                         <div className="account-modal shadow p-5 mb-5  rounded">
-
                             <select className="account-inputs form-select"
                                 value={account && account.role ? account.role : "USER"}
                                 onChange={(e) => setAccount({
@@ -372,7 +330,6 @@ function UserAccount() {
                                 <option value="USER">User</option>
                                 <option value="ADMIN">Admin</option>
                             </select>
-
                             <input class="account-inputs form-control" value={account.password} placeholder="password"
                                 onChange={(e) => setAccount({
                                     ...account,
@@ -401,30 +358,21 @@ function UserAccount() {
                             <button class="btn  btn-primary rounded-pill " onClick={save}>
                                 Save
                             </button>
-
-
                         </div>
                     </div>
-
-
                 </div>
-
             ) : (
-
                 <div>
                     {!logged_in && !author && (
                         <div>
-
                             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli"
                                 className="bad-computer" />
                             <h1> You are not logged in</h1>
                             <h2>not logged in</h2>
                         </div>
                     )}
-
                     {/*For viewing someone else's account*/}
                     {author && (
-
                         <div className="account-container">
                             <div className="col-12 col-md-6 left-side">
                                 <div className="account-info3">
