@@ -14,20 +14,27 @@ import {
     ModalHeader,
     ModalOverlay, useDisclosure
 } from "@chakra-ui/react";
-import account, {accountData} from "./account";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {
+    setAccount, setLoggedIn,
+} from "./accountReducer";
 
 function UserList() {
     const [users, setUsers] = useState([]);
     const [editUserModal, setEditUserModal] = useState({});
     const [editUser, setEditUser] = useState({});
     const [isAdmin, setIsAdmin] = useState(false);
+    const account = useSelector((state) => state.accountReducer.account);
 
     // save account info
-    const [account, setAccount] = useState(null);
+    // const [account, setAccount] = useState(null);
     const navigate = useNavigate();
     const save = async () => {
-        await client.updateUser(account);
+        // await client.updateUser(account);
+        // console.log("UPDATED USER in save ", editUser);
+        // await client.updateUser(editUser);
+        // console.log("Save acc check", account);
     };
 
     // handle modal
@@ -68,15 +75,20 @@ function UserList() {
         try {
             const status = await client.updateUser(editUser);
             setUsers(users.map(u => (u._id === editUser._id ? editUser : u)));
+            console.log("UPDATED USER ", editUser);
             closeEditModal(editUser._id);
+            setEditUser({});
+            console.log("re- setting the account ", account);
         } catch (err) {
             console.log(err);
         }
     };
 
     const fetchAccount = async () => {
-        const account = await client.account();
-        setAccount(account);
+        const tempAccount = await client.account();
+        setAccount(tempAccount);
+        console.log("----------fetch set account2", tempAccount);
+        console.log("----------fetch set account3", account);
     };
 
     useEffect(() => {

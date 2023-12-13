@@ -164,7 +164,7 @@ function User() {
 
     console.log("FETCHING REVEIEWS")
     if (logged_in && !author) {
-      console.log("getting your reviews loggedin ");
+      console.log("getting your reviews logged in ");
       const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
       setReviews(reviewsResponse);
       console.log("reviews are set 1 account" , account);
@@ -221,9 +221,11 @@ function User() {
   useEffect(() => {
     console.log("Fetch account", account);
     usersClient.account()
-        .then((response) =>
-            dispatch(setAccount(response))
-        );
+        .then((response) =>{
+              console.log("Account API Response:", response); // Log the response
+              dispatch(setAccount(response)); // Dispatch the response to set the account state
+              dispatch(setLoggedIn(response !== "")); // Update whether the user is logged in based on account
+        });
     console.log("Update whether the user is logged in based on account");
     usersClient.account()
         .then((response) =>
