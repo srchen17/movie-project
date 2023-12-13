@@ -22,6 +22,7 @@ import { Provider } from "react-redux";
 import UserReviews from './users/user-reviews';
 import ReviewEditor from './reviews/edit-review';
 import Home from './home/home';
+import UserAccount from './users/user-account';
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -148,8 +149,8 @@ function App() {
                       <span className="menu-text" onClick={closeNav}>Search</span>
                     </Link>
                   </li>
-                  <li className="menu-text" >
-                    <Link to="/account">
+                  <li className="menu-text">
+                    <Link to={account._id !== null ? `/account/${account._id}` : '/account'}>
                       <span className="menu-text" onClick={closeNav}>Account</span>
                     </Link>
                   </li>
@@ -178,6 +179,7 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userslist" element={<Userslist />} />
+                // SWITCH 
                 <Route path="/account" element={<Account />} />
                 <Route path="/account/:accountId" element={<Account />} />
                 <Route path="/search/*" element={<Search />} />

@@ -1,0 +1,37 @@
+
+/* movie card */
+
+.results .movie-card {
+    min-width: 180px;
+    min-height: 255px;
+    max-width: 180px;
+    max-height: 255px;;
+    box-shadow: 0 15px 10px 0 rgba(0, 0, 0, 0.2), 0 15px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px;
+    margin-bottom: 40px;
+}
+
+.movie-results-group .movie-card {
+    padding: none;
+}
+
+.results .movie-card:hover {
+    transition: transform 0.2s ease;
+    /* min-width: 190px; */
+    transform: scale(1.05);
+    /* min-height: 255px; */
+    /* max-width: 180px;
+    max-height: 255px;; */
+  }
+
+  .results .movie-card-image {
+    border-radius: 10px;
+}
+
+
+.results .genre-name {
+    margin-left: 20px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
