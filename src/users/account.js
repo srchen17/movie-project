@@ -93,23 +93,24 @@ function User() {
     fetchReviews();
   };
 
-  const handleDelete = async (removeFollower) => {
+  const handleDelete = async (removeFollower,type) => {
     console.log("in handle Delete");
     console.log("Accountid", account._id);
     console.log("remove Follower", removeFollower);
 
-
-
     console.log("ABOUT TO delete ");
     if (logged_in){
       try {
-        // Call the removeFollower function passing the userId and followerId
-        const result = await client.deleteFollower(account._id, removeFollower);
-        console.log('Follower removed successfully:', result);
-        // Perform any necessary actions after successful removal
+        if (type == 'follower'){
+          const result = await client.deleteFollower(account._id, removeFollower);
+          console.log('Follower removed successfully:', result);
+        }else if (type == 'following'){
+          const result = await client.deleteFollowing(account._id, removeFollower);
+          console.log('Follower removed successfully:', result);
+        }
+
       } catch (error) {
-        console.error('Failed to remove follower:', error.message);
-        // Handle errors appropriately (e.g., show an error message)
+        console.error('Failed to remove follower/following:', error.message);
       }
       setEditUser(account);
 
@@ -123,7 +124,6 @@ function User() {
 
       fetchFollowInfo();
       console.log("after deleted a follower" , account);
-      // dispatch(setAccount(account));
       const updatedInfo = await client.findUserById(account._id);
       dispatch(setAccount(updatedInfo));
 
@@ -140,6 +140,7 @@ function User() {
 
 
   };
+
 
 
   const dispatch = useDispatch();
@@ -159,8 +160,10 @@ function User() {
   }
 
   const fetchReviews = async () => {
+
+
     console.log("FETCHING REVEIEWS")
-    if (logged_in ) {
+    if (logged_in && !author) {
       console.log("getting your reviews loggedin ");
       const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
       setReviews(reviewsResponse);
@@ -168,6 +171,8 @@ function User() {
       console.log("reviews are set 1 author" , author);
     } else if (author) {
       console.log("getting author's reviews not logged in");
+      console.log("reviews are set 2 account" , account);
+      console.log("reviews are set 2 author" , author);
       const reviewsResponse = await reviewsClient.findReviewByUserId(author._id);
       setReviews(reviewsResponse);
     } else {
@@ -181,6 +186,7 @@ function User() {
     if (logged_in && !author) {
 
       if (account) {
+        console.log("follow info but you are logged in and there is account ", account);
         const followersResponse = await client.findAllFollowersByUserId(account._id);
         console.log(followersResponse)
         setFollowers([...followersResponse]);
@@ -193,7 +199,8 @@ function User() {
         console.log("logged in but no account?")
       }
 
-    } else {
+    } else if (author){
+      console.log("follow info there is author ", author);
       const followersResponse = await client.findAllFollowersByUserId(author._id);
       console.log(followersResponse)
       setFollowers([...followersResponse]);
@@ -201,13 +208,18 @@ function User() {
 
       const followingResponse = await client.findAllFollowingByUserId(author._id);
       setFollowing([...followingResponse]);
+    }else{
+      console.log("-----else for follow info-----");
+      console.log("account ",account)
+      console.log("author ",author)
+      console.log("------else for follow info end _-----");
     }
 
   };
 
   // fetch author is the first thing to check
   useEffect(() => {
-    console.log("Fetch account");
+    console.log("Fetch account", account);
     usersClient.account()
         .then((response) =>
             dispatch(setAccount(response))
@@ -217,6 +229,9 @@ function User() {
         .then((response) =>
             dispatch(setLoggedIn(response != ""))
         );
+
+
+
     if (accountId == account._id) {
       console.log("here 1");
       setEditUser(account);
@@ -272,7 +287,7 @@ function User() {
         `}
         </style>
         {/*Case 1: you are logged in and this is your account*/}
-        {((logged_in && account && account == author) || (accountId == account._id) || (logged_in && account && accountId == null)) ? (
+        {((logged_in && account && account == author) || (accountId == account._id && logged_in) || (logged_in && account && accountId == null)) ? (
             <div className="account-container">
               <div className="col-12 col-md-6 left-side">
                 <div class="account-info2">
@@ -302,7 +317,7 @@ function User() {
                                         <li className="list-group-item">
                                           <h6> {follower} </h6>
                                           <Button className="btn btn-outline-danger mb-3 btn-sm    text-dark"
-                                                  onClick={()=> handleDelete(follower)}> Remove  </Button>
+                                                  onClick={()=> handleDelete(follower,'follower')}> Remove  </Button>
                                         </li>
                                       </div>
 
@@ -315,24 +330,27 @@ function User() {
                         </div>
                         <span className="badge bg-primary rounded-pill">{followers.length > 0 && followers.length || 0}</span>
                       </li>
+
                       <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
                         <div className="ms-2 me-auto follower-info">
                           <CollapsibleComponent title="Following">
                             {following && following.length > 0 ? (
-                                <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                                <ul className="list-group list-group-horizontal  overflow-auto">
                                   {following.map((follower) => (
-                                      <Link to={`/account/${follower}`}>
-                                        <div className="card profile-card m-3 d-flex justify-content-center">
+                                        <div className="card following-card profile-card   justify-content-center"style={{ minWidth: '300px' }}>
                                           <div className="">
+                                            <Link to={`/account/${follower}`}>
                                             <div className="d-flex justify-content-center">
                                               <CgProfile size={100} />
                                             </div>
+                                            </Link>
                                             <li className="list-group-item">
                                               <h6> {follower} </h6>
+                                              <Button className="btn btn-outline-danger mb-3 btn-sm    text-dark"
+                                                      onClick={()=> handleDelete(follower,'following')}> Remove  </Button>
                                             </li>
                                           </div>
                                         </div>
-                                      </Link>
                                   ))}
                                 </ul>
                             ) : (
@@ -384,9 +402,9 @@ function User() {
                 <div className="account-modal shadow p-5 mb-5  rounded">
 
                   <select className="account-inputs form-select"
-                          value={account && account.role ? account.role : "USER"}
-                          onChange={(e) => setAccount({
-                            ...account,
+                          value={editUser && editUser.role ? editUser.role : "USER"}
+                          onChange={(e) => setEditUser({
+                            ...editUser,
                             role: e.target.value
                           })}>
                     <option value="USER">User</option>
@@ -438,7 +456,7 @@ function User() {
               )}
               {/*For viewing someone else's account*/}
               {author && (
-                  <div className="account-container">
+                  <div className="profile-container">
                     <div className="col-12 col-md-6 left-side">
                       <div className="account-info3">
                         <h1>

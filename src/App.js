@@ -150,7 +150,7 @@ function App() {
                     </Link>
                   </li>
                   <li className="menu-text">
-                    <Link to={account._id !== null ? `/account/${account._id}` : '/account'}>
+                    <Link to={account._id !== null  && account._id !== undefined ? `/account/${account._id}` : '/account'}>
                       <span className="menu-text" onClick={closeNav}>Account</span>
                     </Link>
                   </li>

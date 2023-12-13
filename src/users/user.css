@@ -13,6 +13,14 @@
     height: 100vh;
 }
 
+.profile-container{
+    display: flex;
+    margin-top: 130px;
+
+
+
+}
+
 .bad-computer{
     width:150px;
     margin-right:50px;
@@ -45,13 +53,15 @@
     /*justify-content: center;*/
 }
 
+.following-card{
+    width:300px !important;
+}
 
 .account-info3{
 
     width:500px;
     height:400px;
     display: flex;
-    margin-left: 150px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
