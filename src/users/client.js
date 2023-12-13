@@ -6,55 +6,57 @@ const request = axios.create({
 });
 
 
-export const BASE_API = "https://movie-project-backend.onrender.com"
-// export const BASE_API = "http://localhost:4000";
+// export const BASE_API = "https://movie-project-backend.onrender.com"
+export const BASE_API = "http://localhost:4000";
 
 
 export const USERS_API = `${BASE_API}/api/users`;
 
 export const signin = async (credentials) => {
-    const response = await axios.post( `${USERS_API}/signin`, credentials );
+    const response = await request.post( `${USERS_API}/signin`, credentials );
     return response.data;
 };
 
+
+
 export const account = async () => {
-    const response = await axios.post(`${USERS_API}/account`);
+    const response = await request.post(`${USERS_API}/account`);
     return response.data;
     
 };
 
 export const updateUser = async (user) => {
-    const response = await axios.put(`${USERS_API}/${user._id}`, user);
+    const response = await request.put(`${USERS_API}/${user._id}`, user);
     return response.data;
 };
 
 export const findLatestUsers = async () => {
-    const response = await axios.get(`${USERS_API}/latest/find`);
+    const response = await request.get(`${USERS_API}/latest/find`);
     return response.data;
 };
 
 export const findAllUsers = async () => {
-    const response = await axios.get(`${USERS_API}`);
+    const response = await request.get(`${USERS_API}`);
     return response.data;
 };
 
 export const signup = async (credentials) => {
-    const response = await axios.post(
+    const response = await request.post(
         `${USERS_API}/signup`, credentials);
     return response.data;
 };
 
 export const createUser = async (user) => {
-    const response = await axios.post(`${USERS_API}`, user);
+    const response = await request.post(`${USERS_API}`, user);
     return response.data;
 };
 export const findUserById = async (id) => {
-    const response = await axios.get(`${USERS_API}/${id}`);
+    const response = await request.get(`${USERS_API}/${id}`);
     return response.data;
 };
 
 export const signout = async () => {
-    const response = await axios.post(`${USERS_API}/signout`);
+    const response = await request.post(`${USERS_API}/signout`);
     return response.data;
 };
 
@@ -70,7 +72,7 @@ export const follow = async (userId,followerId) => {
     console.log({userId});
     console.log({followerId});
     console.log(" --- ");
-    const response = await axios.post(`${USERS_API}/follow`, { userId, followerId });
+    const response = await request.post(`${USERS_API}/follow`, { userId, followerId });
 
     console.log("Response --- ");
     console.log({response});
@@ -81,12 +83,12 @@ export const follow = async (userId,followerId) => {
 
 
 export const findAllFollowersByUserId = async (id) => {
-    const response = await axios.get(`${USERS_API}/followers/${id}`);
+    const response = await request.get(`${USERS_API}/followers/${id}`);
     return response.data;
 };
 
 export const findAllFollowingByUserId = async (id) => {
-    const response = await axios.get(`${USERS_API}/following/${id}`);
+    const response = await request.get(`${USERS_API}/following/${id}`);
     return response.data;
 };
 
