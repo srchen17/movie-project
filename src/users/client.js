@@ -7,7 +7,7 @@ const request = axios.create({
 
 
 export const BASE_API = "https://movie-project-backend.onrender.com"
-// export const BASE_API = "http://localhost:4000";
+//   export const BASE_API = "http://localhost:4000";
 // export const BASE_API = "https://test-movie-backend.onrender.com";
 
 
@@ -93,5 +93,17 @@ export const findAllFollowingByUserId = async (id) => {
     const response = await request.get(`${USERS_API}/following/${id}`);
     return response.data;
 };
+
+
+export const deleteFollower = async (userId,followerId) => {
+        console.log("in client function ",userId);
+        console.log("in client function ",followerId);
+        const response = await request.delete(`${USERS_API}/followers/${userId}/${followerId}`);
+        console.log("return",response);
+        return response.data;
+
+};
+
+
 
 

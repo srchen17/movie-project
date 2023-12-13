@@ -149,8 +149,8 @@ function App() {
                       <span className="menu-text" onClick={closeNav}>Search</span>
                     </Link>
                   </li>
-                  <li className="menu-text" >
-                    <Link to="/account">
+                  <li className="menu-text">
+                    <Link to={account._id !== null ? `/account/${account._id}` : '/account'}>
                       <span className="menu-text" onClick={closeNav}>Account</span>
                     </Link>
                   </li>
