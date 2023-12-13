@@ -197,6 +197,9 @@ function Account() {
 
 // fetch author is the first thing to check
   useEffect(() => {
+    console.log(accountId);
+    console.log(logged_in);
+    console.log(author);
     if (accountId){
       fetchAuthor();
     }
