@@ -5,45 +5,45 @@ const request = axios.create({
 });
 
 export const BASE_API = "https://movie-project-backend.onrender.com"
-// export const BASE_API = process.env.REACT_APP_BASE_API_URL;
+// export const BASE_API = "http://localhost:4000";
 
 export const REVIEWS_API = `${BASE_API}/api/reviews`;
 
 export const createReview = async (review) => {
-        const response = await axios.post(`${REVIEWS_API}`, review);
+        const response = await request.post(`${REVIEWS_API}`, review);
         return response.data;
     
 };
 
 export const findAllReviews = async () => {
-    const response = await axios.get(`${REVIEWS_API}`);
+    const response = await request.get(`${REVIEWS_API}`);
     return response.data;
 };
 
 
 export const findLatestReviews = async () => {
-    const response = await axios.get(`${REVIEWS_API}/latest`);
+    const response = await request.get(`${REVIEWS_API}/latest`);
     return response.data;
 };
 
 export const findReviewById = async (id) => {
-    const response = await axios.get(`${REVIEWS_API}/${id}`);
+    const response = await request.get(`${REVIEWS_API}/${id}`);
     return response.data;
 };
 
 export const findReviewByMovieId = async (id) => {
-    const response = await axios.get(`${REVIEWS_API}/movie/${id}`);
+    const response = await request.get(`${REVIEWS_API}/movie/${id}`);
     return response.data;
 };
 
 export const findReviewByUserId = async (id) => {
-    const response = await axios.get(`${REVIEWS_API}/user/${id}`);
+    const response = await request.get(`${REVIEWS_API}/user/${id}`);
     return response.data;
 };
 
 export const updateReview = async (review) => {
     try {
-        const response = await axios.put(`${REVIEWS_API}/${review._id}`, review);
+        const response = await request.put(`${REVIEWS_API}/${review._id}`, review);
      return response.data;
 
     } catch (err) {
