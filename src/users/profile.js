@@ -106,6 +106,12 @@ function Profile() {
     };
 
     const fetchUserData = async() => {
+        const response = await usersClient.account();
+        dispatch(setAccount(response));
+        dispatch(setLoggedIn(response !== ""));
+        console.log("PROFILE: Set logged in as" + logged_in);
+        console.log("PROFILE: Set account as" + JSON.stringify(account));
+
         await usersClient.findUserById(userId)
         .then((response) => (setUser(response)));
         await reviewsClient.findReviewByUserId(userId)
