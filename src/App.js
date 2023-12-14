@@ -22,6 +22,7 @@ import { Provider } from "react-redux";
 import UserReviews from './users/user-reviews';
 import ReviewEditor from './reviews/edit-review';
 import Home from './home/home';
+import Profile from './users/profile';
 import UserAccount from './users/user-account';
 
 import { useSelector, useDispatch } from "react-redux";
@@ -87,8 +88,8 @@ function App() {
   useEffect(() => {
     // Check if the user's role is ADMIN and update isAdmin state accordingly
     console.log("before check");
-    console.log(account)
-    if (account && account.role === 'ADMIN') {
+    console.log(account);
+    if (account.role === 'ADMIN') {
       console.log("ADMIN IS SET AS TRUE")
       setIsAdmin(true);
     } else {
@@ -179,9 +180,9 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userslist" element={<Userslist />} />
-                // SWITCH 
                 <Route path="/account" element={<Account />} />
-                <Route path="/account/:accountId" element={<Account />} />
+                <Route path="/useraccount" element={<UserAccount />} />
+                <Route path="/profile/:userId" element={<Profile />} />
                 <Route path="/search/*" element={<Search />} />
                 <Route path="search/:query" element={<Results />} />
                 <Route path="details/:id" element={<Details />} />

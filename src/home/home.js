@@ -126,7 +126,7 @@ function Home() {
                     <h3 className="genre-name">Recently Joined Users</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
                         {latestUsers.map((user) => (
-                            <Link to={`/account/${user._id}`}>
+                            <Link to={`/profile/${user._id}`}>
                                 <div className="card profile-card m-3 d-flex justify-content-center">
                                     <div className="">
                                         <div className="d-flex justify-content-center">

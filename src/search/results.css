@@ -11,8 +11,14 @@
     margin-bottom: 40px;
 }
 
+
+
 .movie-results-group .movie-card {
-    padding: none;
+    padding: 10px; 
+    padding-top: 10px;
+    padding-right: 10px; 
+    padding-bottom: 10px; 
+    padding-left: 10px;
 }
 
 .results .movie-card:hover {
