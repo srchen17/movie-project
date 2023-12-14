@@ -235,6 +235,32 @@ function User() {
                                     <span className="badge  bg-primary rounded-pill">{following.length > 0 && following.length || 0}</span>
                                 </li>
                                 <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
+                                                <div className="ms-2 me-auto follower-info">
+                                                    <CollapsibleComponent title="Reviews">
+                                                        {reviews && reviews.length > 0 ? (
+                                                            <ul className="list-group list-group-horizontal position-relative overflow-auto">
+                                                                {reviews.map((review) => (
+                                                                    <Link to={`/account/reviews/${review._id}`}>
+                                                                        <div className="card review-card m-3 d-flex justify-content-center">
+                                                                            <li className="list-group-item">
+                                                                                <h2> {review.rating} / 100 </h2>
+                                                                                <p> {review.review} </p>
+                                                                                <Link to={`/account/reviews/edit/${review._id}`}>
+                                                                                    <button className="btn btn-primary">Edit</button>
+                                                                                </Link>
+                                                                            </li>
+                                                                        </div>
+                                                                    </Link>
+                                                                ))}
+                                                            </ul>
+                                                        ) : (
+                                                            <p>You don't have any reviews yet.</p>
+                                                        )}
+                                                    </CollapsibleComponent>
+                                                </div>
+                                                <span className="badge bg-primary rounded-pill">{reviews.length > 0 && reviews.length || 0}</span>
+                                            </li>
+                                {/* <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
                                     <div className="ms-2 me-auto follower-info">
                                         <CollapsibleComponent title="Reviews">
                                             {reviews && reviews.length > 0 ? (
@@ -266,7 +292,7 @@ function User() {
                                         </CollapsibleComponent>
                                     </div>
                                     <span className="badge bg-primary rounded-pill">{reviews.length > 0 && reviews.length || 0}</span>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                     </div>
