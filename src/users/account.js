@@ -27,7 +27,7 @@ function User() {
     const [isLoading, setIsLoading] = useState(true);
 
     const [account, setAccount] = useState(null);
-    const [logged_in, setLoggedIn] = useState(null);
+    const [logged_in, setLoggedIn] = useState(false);
 
     // collapse content
     const CollapsibleComponent = ({ title, children }) => {
