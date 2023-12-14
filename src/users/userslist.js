@@ -49,10 +49,6 @@ function UserList() {
         }
     };
 
-
-
-
-
     const selectUser = async (user) => {
         try {
             const u = await client.findUserById(user._id);
@@ -124,14 +120,14 @@ function UserList() {
 
 
 
-<div className=" d-none d-lg-block">
+<div className=" d-none d-md-block">
 
     {!account && isAdmin && (
 
         <div className="account-container">
 
             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer"/>
-            <h1> You don't her permission, log in with an Admin account</h1>
+            <h1> You don't have permission, log in with an Admin account</h1>
 
 
         </div>

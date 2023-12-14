@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import * as reviewsClient from "../reviews/client";
 import * as usersClient from "../users/client";
+import { useDispatch } from "react-redux";
 
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router";
+import { setAccount } from "../users/accountReducer";
 
 function AdminView() {
     const navigate = useNavigate();
@@ -44,6 +46,8 @@ function Home() {
     const [trendingMovies, setTrendingMovies] = useState([]);
 
 
+    const dispatch = useDispatch();
+
     // function that fetches results from the server 
     const fetchResults = async (genre1, genre2, genre3, genre4) => {
 
@@ -67,7 +71,9 @@ function Home() {
         const response4 = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${REACT_APP_API_KEY}&with_genres=${genre4}`);
         setGroup4Results(response4.data.results);
 
-        console.log(account);
+        await usersClient.account().then(res => dispatch(setAccount(res))); 
+        console.log("Home calls:" + JSON.stringify(account));
+
         if (logged_in) {
             const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
             setReviews(reviewsResponse);
@@ -126,7 +132,7 @@ function Home() {
                     <h3 className="genre-name">Recently Joined Users</h3>
                     <ul className="list-group list-group-horizontal position-relative overflow-auto">
                         {latestUsers.map((user) => (
-                            <Link to={`/account/${user._id}`}>
+                            <Link to={`/profile/${user._id}`}>
                                 <div className="card profile-card m-3 d-flex justify-content-center">
                                     <div className="">
                                         <div className="d-flex justify-content-center">

@@ -22,10 +22,8 @@ function Signin() {
         try{
             console.log("IN THE TRY");
             const value = await client.signin(credentials);
-
             dispatch(setAccount(value));
             dispatch(setLoggedIn(true));
-
             navigate("/account");
         }catch (error){
             console.log("THIS IS THE ERROR")

@@ -14,16 +14,16 @@ function Search() {
     const [query, setQuery] = useState("");
     return (
         <div>
-            <div class="movie-display-group">
-                <div class=" row p-3">
+            <div class="w-100">
+                <div class="w-100 row p-3">
                     {/*<h3>Search</h3>*/}
                     {/* Search Bar  */}
 
-                    <div className=" d-flex search">
+                    <div className="w-100 d-flex search">
 
                     <input
                         onChange={(e) => setQuery(e.target.value)}
-                        className="form-control rounded-pill search-bar shadow-sm p-3 mb-5 bg-white" type="text"
+                        className="w-100 form-control rounded-pill search-bar shadow-sm mb-5 bg-white" type="text"
                         placeholder="Search" aria-label="Search"
                         value={query} />
                     {/* Search button: on click, links to results page, passes query

@@ -101,7 +101,7 @@ function UserReviews() {
                   <p className="rating">Rating: {review.rating} / 100</p>
                   <p> {review.review} </p>
                   {author && (
-                    <p>Written By: <Link to={`/account/${author._id}`}> {author && author.username}</Link> </p>
+                    <p>Written By: <Link to={`/profile/${author._id}`}> {author && author.username}</Link> </p>
                   )}
                   {(account._id == author._id) && (
                     <Link to={`/account/reviews/edit/${review._id}`}>

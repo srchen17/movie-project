@@ -6,10 +6,10 @@ const request = axios.create({
 });
 
 
-  export const BASE_API = "https://movie-project-backend.onrender.com"
- //   export const BASE_API = "http://localhost:4000";
-// export const BASE_API = "https://test-movie-backend.onrender.com";
 
+// export const BASE_API = "https://movie-project-backend.onrender.com"
+// export const BASE_API = "http://localhost:4000";
+export const BASE_API = "https://test-movie-backend.onrender.com";
 
 
 export const USERS_API = `${BASE_API}/api/users`;
@@ -75,6 +75,21 @@ export const follow = async (userId,followerId) => {
     console.log({followerId});
     console.log(" --- ");
     const response = await request.post(`${USERS_API}/follow`, { userId, followerId });
+
+    console.log("Response --- ");
+    console.log({response});
+    console.log(" --- ");
+
+    return response.data;
+};
+
+export const unfollow = async (userId,followingId) => {
+
+    console.log("BEOFRE --- ");
+    console.log({userId});
+    console.log({followingId});
+    console.log(" --- ");
+    const response = await request.post(`${USERS_API}/unfollow`, { userId, followingId });
 
     console.log("Response --- ");
     console.log({response});
