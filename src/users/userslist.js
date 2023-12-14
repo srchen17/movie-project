@@ -87,8 +87,8 @@ function UserList() {
     const fetchAccount = async () => {
         const tempAccount = await client.account();
         setAccount(tempAccount);
-        console.log("----------fetch set account2", tempAccount);
-        console.log("----------fetch set account3", account);
+        console.log("---------- fetch set account2", tempAccount);
+        console.log("---------- fetch set account3", account);
     };
 
     useEffect(() => {
