@@ -111,7 +111,7 @@ function User() {
         const responseAccount = await usersClient.account();
         setAccount(responseAccount);
         console.log("Account in set as: " + JSON.stringify(account));
-        setLoggedIn(responseAccount != "");
+        setLoggedIn(responseAccount != null);
         console.log("Logged in set as: " + logged_in);
     }
 
