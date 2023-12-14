@@ -142,7 +142,7 @@ function Profile() {
                                                         {followers && followers.length > 0 ? (
                                                             <ul className="list-group list-group-horizontal position-relative overflow-auto">
                                                                 {followers.map((follower) => (
-                                                                    <Link to={`/account/${follower}`}>
+                                                                    <Link to={`/profile/${follower}`}>
                                                                         <div className="card profile-card m-3 d-flex justify-content-center">
                                                                             <div className="">
                                                                                 <div className="d-flex justify-content-center">
@@ -170,7 +170,7 @@ function Profile() {
                                                         {following && following.length > 0 ? (
                                                             <ul className="list-group list-group-horizontal position-relative overflow-auto">
                                                                 {following.map((follower) => (
-                                                                    <Link to={`/account/${follower}`}>
+                                                                    <Link to={`/profile/${follower}`}>
                                                                         <div className="card profile-card m-3 d-flex justify-content-center">
                                                                             <div className="">
                                                                                 <div className="d-flex justify-content-center">
