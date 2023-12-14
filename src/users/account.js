@@ -344,7 +344,7 @@ function User() {
 }
 
            
-                  {!logged_in && (
+                  {(account == "" || !logged_in) && (
                         <div className="d-flex justify-content-center align-items-center">
                             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli"
                                 className="bad-computer" />
