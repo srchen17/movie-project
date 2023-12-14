@@ -49,14 +49,16 @@ function User() {
         );
     };
 
+    const dispatch = useDispatch();
+
     // save account information
     const save = async () => {
-        await client.updateUser(account);
+        usersClient.updateUser(account);
     };
 
     const toast = useToast();
 
-    // follow account if you are logged or get redirected to sign in
+    //follow account if you are logged or get redirected to sign in
     // const follow = async () => {
     //     // console.log("ABOUT TO FOLLLOW ");
     //     if (logged_in) {
@@ -83,7 +85,6 @@ function User() {
     //     }
     // };
 
-    const dispatch = useDispatch();
 
     // const fetchUserData = async () => {
     //     console.log("Fetch account");
@@ -111,7 +112,7 @@ function User() {
         const responseAccount = await usersClient.account();
         setAccount(responseAccount);
         console.log("Account in set as: " + JSON.stringify(account));
-        setLoggedIn(responseAccount != null);
+        setLoggedIn(responseAccount != "");
         console.log("Logged in set as: " + logged_in);
     }
 
@@ -149,7 +150,7 @@ function User() {
         `}
             </style>
             
-            {account && logged_in && (
+        {account && (
            
 
             <div>
@@ -303,16 +304,17 @@ function User() {
             </div>
                     )}
 
-                    {!logged_in && (
+               
+            </div>
+
+             ) }
+                  {!logged_in && (
                         <div className="d-flex justify-content-center align-items-center">
                             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli"
                                 className="bad-computer" />
                             <h3> You are not logged in</h3>
                         </div>
-                    )}
-            </div>
-
-             ) }
+                  )}
         </div>
     );
 

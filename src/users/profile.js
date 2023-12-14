@@ -51,32 +51,59 @@ function Profile() {
         );
     };
 
-    // // follow account if you are logged or get redirected to sign in
-    // const follow = async () => {
-    //     // console.log("ABOUT TO FOLLLOW ");
-    //     if (logged_in) {
-    //         // console.log("FOLLOWING since im logged in ");
-    //         await client.follow(account._id, author._id);
-    //         //fetch information
-    //         const updatedInfo = fetchFollowInfo();
-    //         dispatch(setAccount(updatedInfo));
-    //         toast({
-    //             title: "Followed!.",
-    //             status: 'success',
-    //             duration: 9000,
-    //             isClosable: true,
-    //         });
-    //         console.log(account);
-    //     } else {
-    //         toast({
-    //             title: "Log in to follow users.",
-    //             status: 'error',
-    //             duration: 9000,
-    //             isClosable: true,
-    //         });
-    //         navigate("/signin")
-    //     }
-    // };
+    // follow account if you are logged or get redirected to sign in
+    const follow = async () => {
+        // console.log("ABOUT TO FOLLLOW ");
+        if (logged_in) {
+            // console.log("FOLLOWING since im logged in ");
+            await usersClient.follow(account._id, user._id);
+            //fetch information
+            const updatedInfo = usersClient.account();
+            dispatch(setAccount(updatedInfo));
+            toast({
+                title: "Followed!.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            });
+            console.log(account);
+        } else {
+            toast({
+                title: "Log in to follow users.",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            });
+            navigate("/signin")
+        }
+    };
+
+       // follow account if you are logged or get redirected to sign in
+       const unfollow = async () => {
+        // console.log("ABOUT TO FOLLLOW ");
+        if (logged_in) {
+            // console.log("FOLLOWING since im logged in ");
+            await usersClient.unfollow(account._id, user._id);
+            //fetch information
+            const updatedInfo = usersClient.account();
+            dispatch(setAccount(updatedInfo));
+            toast({
+                title: "Unfollowed!.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            });
+            console.log(account);
+        } else {
+            toast({
+                title: "Log in to follow users.",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            });
+            navigate("/signin")
+        }
+    };
 
     const fetchUserData = async() => {
         await usersClient.findUserById(userId)
@@ -116,7 +143,7 @@ function Profile() {
     useEffect(() => {
         console.log("CALLED USE EFFECT:");
         fetchUserData();
-    }, ([]));
+    }, (userId));
 
 
     return (
@@ -133,7 +160,15 @@ function Profile() {
                                     <h1>
                                         @ {user.username}
                                     </h1>
-                                    <Button className="btn btn-warning mb-3 btn-lg btn-outline-dark text-dark"> Follow  </Button>
+                                    {followers.includes(account._id) && (
+                                           <Button onClick={unfollow} className="btn btn-warning mb-3 btn-lg btn-outline-dark text-dark"> 
+                                           Unfollow  </Button>
+                                    )}
+                                    {!followers.includes(account._id) && (
+                                        <Button onClick={follow} className="btn btn-warning mb-3 btn-lg btn-outline-dark text-dark"> 
+                                        Follow  </Button>
+                                    )}
+                                    
                                     <div className="account-stats">
                                         <ul className="list-group ">
                                             <li className="list-group-item account-info-group d-flex justify-content-between align-items-start">
@@ -177,7 +212,6 @@ function Profile() {
                                                                                     <CgProfile size={80} />
                                                                                 </div>
                                                                                 <li className="list-group-item">
-                                                                                    hello
                                                                                     <h6>{follower} </h6>
                                                                                 </li>
                                                                             </div>
