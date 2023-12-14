@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import * as reviewsClient from "../reviews/client";
 import { findUserById } from "../users/client";
 import { useSelector } from "react-redux";
+import * as usersClient from "../users/client";
 
 
 function Details() {
@@ -13,9 +14,13 @@ function Details() {
     const REACT_APP_API_KEY = 'f085601780dbbd04b0f1dcb3c4438d12';
     const [movie, setMovie] = useState("");
     const [reviews, setReviews] = useState([]);
-    const logged_in = useSelector((state) => state.accountReducer.logged_in);
+    //const logged_in = useSelector((state) => state.accountReducer.logged_in);
+    const [logged_in, setLoggedIn] =  useState(false);
 
     const fetchMovie = async () => {
+        await usersClient.account().then(res => (setLoggedIn(res != ""))); 
+        console.log("Details calls:" + JSON.stringify(logged_in));
+
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=${REACT_APP_API_KEY}`);
         setMovie(response.data);
         console.log(JSON.stringify(movie))

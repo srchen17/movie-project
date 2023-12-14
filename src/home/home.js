@@ -45,7 +45,6 @@ function Home() {
     // get trending moives 
     const [trendingMovies, setTrendingMovies] = useState([]);
 
-
     const dispatch = useDispatch();
 
     // function that fetches results from the server 
