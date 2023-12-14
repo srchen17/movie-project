@@ -144,139 +144,104 @@ function User() {
 
 
   const dispatch = useDispatch();
-  const fetchAuthor = async () => {
-    // console.log("FETCHING AUTHOR")
+
+  // use accoundID to set the author
+  const getAuthor = async () => {
+    // If this came in as a profile link there is an account Id , there is an author
     if (accountId != null) {
-      // console.log("AUTHOR SETting in fetch author")
       console.log("fetching author id", accountId);
-      const author = await client.findUserById(accountId);
-      setAuthor(author);
+      const temp = await client.findUserById(accountId);
+      setAuthor(temp);
       console.log("author: ", author);
+
+      // otherwise this is an account page visit
     } else if (account) {
       console.log("else this is if accountId was null ");
       const author = await client.findUserById(account._id);
+      setEditUser(account);
       setAuthor(author);
     }
+    fetchReviews();
   }
 
   const fetchReviews = async () => {
 
 
     console.log("FETCHING REVEIEWS")
-    if (logged_in && !author) {
-      console.log("getting your reviews logged in ");
-      const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
-      setReviews(reviewsResponse);
-      console.log("reviews are set 1 account" , account);
-      console.log("reviews are set 1 author" , author);
-    } else if (author) {
-      console.log("getting author's reviews not logged in");
-      console.log("reviews are set 2 account" , account);
-      console.log("reviews are set 2 author" , author);
-      const reviewsResponse = await reviewsClient.findReviewByUserId(author._id);
-      setReviews(reviewsResponse);
-    } else {
-      console.log("trying to get reviews with no author and not logged in ");
-    }
-
-  };
-
-  const fetchFollowInfo = async () => {
-    // console.log("---FETCHING FOLLOW INFO---")
-    if (logged_in && !author) {
-
-      if (account) {
-        console.log("follow info but you are logged in and there is account ", account);
-        const followersResponse = await client.findAllFollowersByUserId(account._id);
-        console.log(followersResponse)
-        setFollowers([...followersResponse]);
-        console.log(followers)
-
-        const followingResponse = await client.findAllFollowingByUserId(account._id);
-        console.log(followingResponse)
-        setFollowing([...followingResponse]);
-      } else {
-        console.log("logged in but no account?")
+    // if you are logged in
+    console.log("review acc", account);
+    console.log("review accid", accountId);
+    console.log("review author", author);
+    if (author || (author && account && author._id != account._id)) {
+        console.log("getting author's reviews not logged in", author._id);
+        console.log("reviews are set 2 account" , account);
+        console.log("reviews are set 2 author" , author);
+        const reviewsResponse = await reviewsClient.findReviewByUserId(author._id);
+        setReviews(reviewsResponse);
+    }else if (account && account._id){
+        console.log("getting your reviews logged in ", account._id);
+        const reviewsResponse = await reviewsClient.findReviewByUserId(account._id);
+        setReviews(reviewsResponse);
+        console.log("reviews are set 1 account" , account);
+        console.log("reviews are set 1 author" , author);
+    }else {
+        console.log("trying to get reviews with no author and not logged in ");
       }
 
-    } else if (author){
-      console.log("follow info there is author ", author);
-      const followersResponse = await client.findAllFollowersByUserId(author._id);
-      console.log(followersResponse)
-      setFollowers([...followersResponse]);
-
-
-      const followingResponse = await client.findAllFollowingByUserId(author._id);
-      setFollowing([...followingResponse]);
-    }else{
-      console.log("-----else for follow info-----");
-      console.log("account ",account)
-      console.log("author ",author)
-      console.log("------else for follow info end _-----");
-    }
 
   };
 
-  // fetch author is the first thing to check
+  // get followers/following information
+  const fetchFollowInfo = async () => {
+    console.log("---FETCHING FOLLOW INFO---")
+
+      // if navigated to logged in user profile or this is a regular account visit
+      if(logged_in && (account && account._id == accountId || accountId == null )){
+        console.log("follow info but you are logged in and there is account ", account);
+        console.log("and account id ", account._id);
+        const followersResponse = await client.findAllFollowersByUserId(account._id);
+        setFollowers([...followersResponse]);
+        const followingResponse = await client.findAllFollowingByUserId(account._id);
+        setFollowing([...followingResponse]);
+
+        // else if you are logged in and you navigate to someone else's profile OR
+        // you are not logged in and you navigate to someone else's profile
+      }else if (author && accountId){
+        console.log("follow info there is author  ", author);
+        const followersResponse = await client.findAllFollowersByUserId(author._id);
+        setFollowers([...followersResponse]);
+        const followingResponse = await client.findAllFollowingByUserId(author._id);
+        setFollowing([...followingResponse]);
+
+      }else{
+        console.log("THIS IS ELSE CASE IN FOLLOWER INFO BUT SHOULD NOT HAPPEN I THINK");
+      }
+
+
+
+  };
+
+  // fetch account is the first thing to check
   useEffect(() => {
     console.log("Fetch account", account);
     usersClient.account()
         .then((response) =>{
-              console.log("Account API Response:", response); // Log the response
-              dispatch(setAccount(response)); // Dispatch the response to set the account state
-              dispatch(setLoggedIn(response !== "")); // Update whether the user is logged in based on account
+              console.log("Account API Response:", response);
+              dispatch(setAccount(response));
+              dispatch(setLoggedIn(response !== ""));
         });
-    console.log("Update whether the user is logged in based on account");
-    usersClient.account()
-        .then((response) =>
-            dispatch(setLoggedIn(response != ""))
-        );
 
-
-
-    if (accountId == account._id) {
-      console.log("here 1");
-      setEditUser(account);
-      fetchAuthor();
-      fetchFollowInfo();
-      fetchReviews();
-
-
-    }else if (accountId){
-      console.log("here 2 ", accountId);
-      fetchAuthor();
-      fetchFollowInfo();
-      fetchReviews();
-
-    }
-    else if (logged_in){
-      console.log("here 3");
-      fetchFollowInfo();
-      fetchReviews();
-    }
-
-
+    // get author, get follow info, get reviews
+    getAuthor();
 
   }, [accountId,logged_in]);
 
-  // then if author is updated fetch reviews  (or just with account)
   useEffect(() => {
-    if (author) {
-      fetchReviews();
-    } else if (account && logged_in) {
-      fetchReviews();
-    }
-  }, [author, account]);
+    console.log("Author updatedm getting reviews  and get follow info:", author);
+    fetchReviews();
+    fetchFollowInfo();
+  }, [author]);
 
-  // then fetch follower info
-  useEffect(() => {
-    if (logged_in) {
-      setEditUser(account);
-      fetchFollowInfo(account);
-    } else if (author) {
-      fetchFollowInfo(author);
-    }
-  }, [logged_in, account, author]);
 
 
   return (
