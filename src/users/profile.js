@@ -9,8 +9,11 @@ import {
     setAccount, setLoggedIn,
 } from "./accountReducer";
 import './account.css';
+import "./profile.css";
 import { Button, useToast } from "@chakra-ui/react";
 import { CgProfile } from "react-icons/cg";
+import { FiRefreshCcw } from "react-icons/fi";
+
 
 import * as usersClient from "./client";
 
@@ -61,7 +64,7 @@ function Profile() {
             const updatedInfo = usersClient.account();
             dispatch(setAccount(updatedInfo));
             toast({
-                title: "Followed!.",
+                title: "Followed! Refresh to see changes.",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -88,7 +91,7 @@ function Profile() {
             const updatedInfo = usersClient.account();
             dispatch(setAccount(updatedInfo));
             toast({
-                title: "Unfollowed!.",
+                title: "Unfollowed! Refresh to see changes.",
                 status: 'success',
                 duration: 9000,
                 isClosable: true,
@@ -161,11 +164,13 @@ function Profile() {
             </style>
                 <div className="d-flex justify-content-center">
                         <div className="account-container">
-                            <div className="col-12 col-md-6 left-side">
+                            <div className="">
                                 <div className="account-info3">
-                                    <h1>
+                                    <h1 className="m-1">
                                         @ {user.username}
                                     </h1>
+                                    <button className="m-3 btn btn-light" onClick={fetchUserData} ><FiRefreshCcw/></button>
+
                                     {followers.includes(account._id) && (
                                            <Button onClick={unfollow} className="btn btn-warning mb-3 btn-lg btn-outline-dark text-dark"> 
                                            Unfollow  </Button>
@@ -218,7 +223,7 @@ function Profile() {
                                                                                     <CgProfile size={80} />
                                                                                 </div>
                                                                                 <li className="list-group-item">
-                                                                                    <h6>{follower} </h6>
+                                                                                    <h6>{follower}</h6>
                                                                                 </li>
                                                                             </div>
                                                                         </div>

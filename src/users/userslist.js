@@ -71,32 +71,37 @@ function UserList() {
     };
 
     const fetchAccount = async () => {
-        const account = await client.account();
-        setAccount(account);
+        await client.account().then((res) =>
+        setAccount(res)).then(
+        console.log("Set account as " + JSON.stringify(account)));
     };
 
     useEffect(() => {
         fetchAccount();
         fetchUsers();
-        if (account && account.role === 'ADMIN') {
-            setIsAdmin(true);
-        } else {
-            setIsAdmin(false);
-        }
     }, []);
 
+    useEffect(() => {
+        console.log("Account is: " + JSON.stringify(account));
+        if (account!= null && account.role === 'ADMIN') {
+            setIsAdmin(true);
+            console.log("Set admin as TRUE");
+        } else {
+            setIsAdmin(false);
+            console.log("Set admin as FALSE");
+        }
+    }, [account]);
 
     const fetchUsers = async () => {
         const users = await client.findAllUsers();
         setUsers(users);
     };
 
-
     const openEditModal = (userId) => {
         setEditUser(users.find(user => user._id === userId));
         setEditUserModal({ ...editUserModal, [userId]: true });
-
     };
+
     const closeEditModal = (userId) => {
         setEditUserModal({ ...editUserModal, [userId]: false });
     };
@@ -105,191 +110,193 @@ function UserList() {
 
     return (
 
-
-
-
-<div className=" d-none d-md-block">
-
-    {!account && isAdmin && (
-
-        <div className="account-container">
-
+<div className="d-md-block">
+    {!isAdmin && (
+        <div className="d-flex justify-content-center align-items-center">
             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli" className="bad-computer"/>
-            <h1> You don't have permission, log in with an Admin account</h1>
-
-
+            <h5> Please sign in with an Admin account.</h5>
         </div>
     )}
 
-        <div className="dashboard-container shadow p-5 mb-5 mt-2 rounded">
+    {account && isAdmin && 
+        <div>
+            <div className="p-5 d-flex justify-content-center align-items-center d-sm-block d-md-none">
+                <h4>Please increase your browser size.</h4>
+            </div>
+         
 
-            <h2 className='mx-4'>User Dashboard</h2>
-            {/*<table className=" table align-middle d-none d-lg-block user-table">*/}
-            <table className=" table align-middle   user-table">
-                <thead>
+         <div className="d-none d-md-block dashboard-container shadow p-5 mb-5 mt-2 rounded">
 
-                {/*//column titles*/}
-                <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Date of Birth</th>
-                    <th></th>
+         <h2 className='mx-4'>User Dashboard</h2>
+         {/*<table className=" table align-middle d-none d-lg-block user-table">*/}
+         <table className=" table align-middle   user-table">
+             <thead>
 
-
-                </tr>
-                </thead>
-
-                <tbody>
-                {users.map((user) => (
-                    <tr className="table-row" key={user._id}>
-
-
-                            <td className='contact-info'>
-                                <div className="d-flex align-items-center">
-                                    <img
-                                        src="https://wallpapers-clan.com/wp-content/uploads/2022/05/cute-pfp-31.jpg"
-                                        alt=""
-                                        style={{'width': '45px', 'height': '45px'}}
-                                        className="rounded-circle"
-                                    />
-
-                                    <div className="ms-3">
-                                        <p className="fw-bold mb-1">{user.firstName} {user.lastName}</p>
-                                        <p className="text-muted mb-0">{user.email}</p>
-
-                                        {user.role =="ADMIN" ?(
-                                            <span className="badge rounded-pill text-bg-danger">{user.role}</span>
-                                        ):(
-                                            <span className="badge rounded-pill text-bg-warning">{user.role}</span>
-                                        )}
-
-                                    </div>
-                                </div>
-
-                            </td>
+             {/*//column titles*/}
+             <tr>
+                 <th>Name</th>
+                 <th>Username</th>
+                 <th>Password</th>
+                 <th>Date of Birth</th>
+                 <th></th>
 
 
+             </tr>
+             </thead>
 
-                        <td className="header">{user.username}</td>
-                        <td className="header">{user.password}</td>
-                        <td className="header">{user.dob}</td>
-                        <td className="account-options">
-                            <div className="d-flex justify-content-start">
-
-                                    <button
-                                        type="button"
-                                        className="btn btn-link mt-3 btn-rounded btn-sm fw-bold "
-                                        data-mdb-ripple-color="dark"
-                                        // onClick={onOpen}
-                                        onClick={() => openEditModal(user._id)}
-                                    >
-                                        <i className="fa-solid text-dark fa-user-pen fa-lg"></i>
-                                    </button>
-
-                                    <button className="btn delete-button  mx-4 delete-account btn-danger text-dark" onClick={() => deleteUser(user)}>
-                                        <svg viewBox="0 0 448 512" className="svgIcon">
-                                            <path
-                                                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
-                                        </svg>
-                                    </button>
-
-                            </div>
+             <tbody>
+             {users.map((user) => (
+                 <tr className="table-row" key={user._id}>
 
 
+                         <td className='contact-info'>
+                             <div className="d-flex align-items-center">
+                                 <img
+                                     src="https://wallpapers-clan.com/wp-content/uploads/2022/05/cute-pfp-31.jpg"
+                                     alt=""
+                                     style={{'width': '45px', 'height': '45px'}}
+                                     className="rounded-circle"
+                                 />
 
-                        </td>
+                                 <div className="ms-3">
+                                     <p className="fw-bold mb-1">{user.firstName} {user.lastName}</p>
+                                     <p className="text-muted mb-0">{user.email}</p>
 
+                                     {user.role =="ADMIN" ?(
+                                         <span className="badge rounded-pill text-bg-danger">{user.role}</span>
+                                     ):(
+                                         <span className="badge rounded-pill text-bg-warning">{user.role}</span>
+                                     )}
 
+                                 </div>
+                             </div>
 
+                         </td>
 
-            <Modal className="edit-modal" id={`editUserModal-${user._id}`} isOpen={editUserModal[user._id]} onClose={() => closeEditModal(user._id)}>
-                <ModalOverlay />
-                <ModalContent minWidth="fit-content" minheight="fit-content">
-                    <ModalHeader>Edit {editUser.username}'s account </ModalHeader>
+                     <td className="header">{user.username}</td>
+                     <td className="header">{user.password}</td>
+                     <td className="header">{user.dob}</td>
+                     <td className="account-options">
+                         <div className="d-flex justify-content-start">
+                                 <button
+                                     type="button"
+                                     className="btn btn-link mt-3 btn-rounded btn-sm fw-bold "
+                                     data-mdb-ripple-color="dark"
+                                     // onClick={onOpen}
+                                     onClick={() => openEditModal(user._id)}
+                                 >
+                                     <i className="fa-solid text-dark fa-user-pen fa-lg"></i>
+                                 </button>
 
-                    <ModalCloseButton />
-                    <ModalBody className="edit-container">
+                                 <button className="btn delete-button  mx-4 delete-account btn-danger text-dark" onClick={() => deleteUser(user)}>
+                                     <svg viewBox="0 0 448 512" className="svgIcon">
+                                         <path
+                                             d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                                     </svg>
+                                 </button>
 
-
-                        <div className="row shadow p-5 mb-5  rounded">
-
-                            <div className="row">
-                                <div className="col-6">
-                                    <input className="account-inputs form-control"
-                                           value={editUser.firstName || ''}
-                                           placeholder="firstname"
-                                           onChange={(e) => setEditUser({ ...editUser, firstName: e.target.value })}
-
-                                    />
-
-                                    <input className="account-inputs form-control"
-                                            value={editUser.lastName || ''}
-                                           placeholder="lastname"
-                                           onChange={(e) => setEditUser({ ...editUser, lastName: e.target.value })}
-                                    />
-                                    <input className="account-inputs form-control"
-                                           value={editUser.dob || ''}
-                                           placeholder="birthday"
-                                           onChange={(e) => setEditUser({ ...editUser, dob: e.target.value })}
-                                    />
-                                    <input className="account-inputs form-control"
-                                           value={editUser.email||''}
-                                           placeholder="email"
-                                           onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
-                                    />
-                                </div>
-
-                                <div className="col">
-                                    <select className="account-inputs form-select"
-                                            value={editUser.role||''}
-                                            onChange={(e) => setEditUser({ ...editUser, role: e.target.value })}
-                                    >
-                                        <option value="USER">User</option>
-                                        <option value="ADMIN">Admin</option>
-                                    </select>
-
-                                    <input className="account-inputs form-control"
-                                           value={editUser.password||''}
-                                           placeholder="password"
-                                           onChange={(e) => setEditUser({ ...editUser, password: e.target.value })}
-                                    />
-
-
-                                </div>
-                            </div>
+                         </div>
+                     </td>
 
 
 
-                            <button className="btn create-button btn-primary rounded-pill " onClick={updateUser}>
-                                Save
-                            </button>
-                            {/*<button className="btn create-button rounded-pill" onClick={createUser}>create user </button>*/}
 
-                        </div>
-                    </ModalBody>
+         <Modal className="edit-modal" id={`editUserModal-${user._id}`} isOpen={editUserModal[user._id]} onClose={() => closeEditModal(user._id)}>
+             <ModalOverlay />
+             <ModalContent minWidth="fit-content" minheight="fit-content">
+                 <ModalHeader>Edit {editUser.username}'s account </ModalHeader>
 
-                    <ModalFooter>
-                        {/*<Button colorScheme='blue' mr={3} onClick={onClose}>*/}
-                        {/*    Close*/}
-                        {/*</Button>*/}
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
-                    </tr>))}
-
-                </tbody>
+                 <ModalCloseButton />
+                 <ModalBody className="edit-container">
 
 
+                     <div className="row shadow p-5 mb-5  rounded">
 
-            </table>
+                         <div className="row">
+                             <div className="col-6">
+                                 <input className="account-inputs form-control"
+                                        value={editUser.firstName || ''}
+                                        placeholder="firstname"
+                                        onChange={(e) => setEditUser({ ...editUser, firstName: e.target.value })}
+
+                                 />
+
+                                 <input className="account-inputs form-control"
+                                         value={editUser.lastName || ''}
+                                        placeholder="lastname"
+                                        onChange={(e) => setEditUser({ ...editUser, lastName: e.target.value })}
+                                 />
+                                 <input className="account-inputs form-control"
+                                        value={editUser.dob || ''}
+                                        placeholder="birthday"
+                                        onChange={(e) => setEditUser({ ...editUser, dob: e.target.value })}
+                                 />
+                                 <input className="account-inputs form-control"
+                                        value={editUser.email||''}
+                                        placeholder="email"
+                                        onChange={(e) => setEditUser({ ...editUser, email: e.target.value })}
+                                 />
+                             </div>
+
+                             <div className="col">
+                                 <select className="account-inputs form-select"
+                                         value={editUser.role||''}
+                                         onChange={(e) => setEditUser({ ...editUser, role: e.target.value })}
+                                 >
+                                     <option value="USER">User</option>
+                                     <option value="ADMIN">Admin</option>
+                                 </select>
+
+                                 <input className="account-inputs form-control"
+                                        value={editUser.password||''}
+                                        placeholder="password"
+                                        onChange={(e) => setEditUser({ ...editUser, password: e.target.value })}
+                                 />
 
 
+                             </div>
+                         </div>
+
+
+
+                         <button className="btn create-button btn-primary rounded-pill " onClick={updateUser}>
+                             Save
+                         </button>
+                         {/*<button className="btn create-button rounded-pill" onClick={createUser}>create user </button>*/}
+
+                     </div>
+                 </ModalBody>
+
+                 <ModalFooter>
+                     {/*<Button colorScheme='blue' mr={3} onClick={onClose}>*/}
+                     {/*    Close*/}
+                     {/*</Button>*/}
+                 </ModalFooter>
+             </ModalContent>
+         </Modal>
+                 </tr>))}
+
+             </tbody>
+
+
+
+         </table>
+
+
+     </div>
+     </div>
+
+
+    }
+
+
+       
         </div>
 
 
-        </div>
     );
+    
+
 }
 export default UserList;
 

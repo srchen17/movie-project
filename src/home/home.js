@@ -19,7 +19,7 @@ function AdminView() {
     };
 
     return (
-        <button className="btn btn-warning mb-3 button-56 btn-lg btn-outline-dark text-dark " onClick={adminView} >
+        <button className="m-4 btn btn-warning button-56 btn-lg btn-outline-dark text-dark " onClick={adminView} >
             Admin View
         </button>
     );

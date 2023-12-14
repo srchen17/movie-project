@@ -107,13 +107,25 @@ function User() {
     //     }
     // }
 
-    const fetchAccount = async () => {
+    // OLD AND WORKING 
+    // const fetchAccount = async () => {
+    //     console.log("Fetch account");
+    //     const responseAccount = await usersClient.account();
+    //     setAccount(responseAccount);
+    //     console.log("Account in set as: " + JSON.stringify(account));
+    //     setLoggedIn(responseAccount != "");
+    //     console.log("Logged in set as: " + logged_in);
+    // }
+
+        const fetchAccount = async () => {
         console.log("Fetch account");
-        const responseAccount = await usersClient.account();
-        setAccount(responseAccount);
-        console.log("Account in set as: " + JSON.stringify(account));
-        setLoggedIn(responseAccount != "");
-        console.log("Logged in set as: " + logged_in);
+
+        await usersClient.account().then(
+        (res) => setAccount(res)).then(
+        console.log("Account in set as: " + JSON.stringify(account)))
+        .then(
+        setLoggedIn(account != "")).then(
+        console.log("Logged in set as: " + logged_in));
     }
 
     const fetchUserInfo = async () => {
@@ -128,7 +140,6 @@ function User() {
             .then((response) => setFollowing(response));
     }
 
-
     // fetch author is the first thing to check
     useEffect(() => {
         console.log("CALLED USE EFFECT:");
@@ -137,10 +148,12 @@ function User() {
 
     useEffect(() => {
         if (account) {
+            console.log("Account exists");
+            setLoggedIn(true);
+            console.log(logged_in);
           fetchUserInfo();
         }
       }, [account]);
-
 
     return (    
         <div>
@@ -150,11 +163,9 @@ function User() {
         `}
             </style>
             
-        {account && (
-           
-
+        {account && 
             <div>
-
+            
             {logged_in && (
             <div className="account-container">
                 <div className="col-12 col-md-6 left-side">
@@ -302,12 +313,11 @@ function User() {
                     </div>
                 </div>
             </div>
-                    )}
-
-               
+                    )} 
             </div>
+}
 
-             ) }
+           
                   {!logged_in && (
                         <div className="d-flex justify-content-center align-items-center">
                             <img src="https://cdn-icons-png.flaticon.com/512/3587/3587166.png" alt="Italian Trulli"
