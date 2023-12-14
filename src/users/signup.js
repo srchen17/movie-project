@@ -47,7 +47,7 @@ function Signup() {
                         ...credentials,
                         username: e.target.value })} />
                 <input
-                    type="text" placeholder="Enter username" className="form-control signin-inputs"
+                    type="text" placeholder="Enter password" className="form-control signin-inputs"
                     value={credentials.password}
                     onChange={(e) => setCredentials({
                         ...credentials,
